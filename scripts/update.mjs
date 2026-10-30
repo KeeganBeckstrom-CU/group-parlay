@@ -7,6 +7,13 @@
 // Runs inside GitHub Actions on a timer. Safe to run by hand: `node scripts/update.mjs`.
 import { readFile, writeFile, appendFile } from "node:fs/promises";
 
+// In GitHub Actions, also surface messages as annotations so they show on the run summary.
+const GH = !!process.env.GITHUB_ACTIONS;
+const warn = (m) => { console.error(m); if (GH) console.log(`::warning::${String(m).replace(/\n/g, " ")}`); };
+const note = (m) => { console.log(m); if (GH) console.log(`::notice::${String(m).replace(/\n/g, " ")}`); };
+process.on("uncaughtException", (e) => { console.log(`::error::Update failed: ${e && e.stack ? e.stack.split("\n").slice(0, 3).join(" | ") : e}`); process.exit(1); });
+process.on("unhandledRejection", (e) => { console.log(`::error::Update failed: ${e && e.stack ? e.stack.split("\n").slice(0, 3).join(" | ") : e}`); process.exit(1); });
+
 const ROOT = new URL("../", import.meta.url);
 const GAMES = new URL("games.json", ROOT);
 const TEAMS = new URL("teams.json", ROOT);
@@ -145,7 +152,7 @@ if (schedDue) {
   games.season = year;
 }
 for (const w of due) { const [t, n] = fromSite(w); targets.set(`${t}-${n}`, [t, n]); }
-console.log(`Checking ${[...targets.keys()].join(", ")}${schedDue ? " (daily schedule check)" : " (games that should be over)"}`);
+note(`Checking ${[...targets.keys()].join(", ")}${schedDue ? " (daily schedule check)" : " (games that should be over)"}`);
 
 const records = {};
 for (const [t, w] of targets.values()) {
@@ -157,7 +164,7 @@ for (const [t, w] of targets.values()) {
     const entry = { week: wk.week, ...(wk.label ? { label: wk.label } : {}), games: wk.games };
     if (i >= 0) games.weeks[i] = entry; else games.weeks.push(entry);
   } catch (e) {
-    console.error(`Week ${t}-${w} failed: ${e.message}`);
+    warn(`Week ${t}-${w} failed: ${e.message}`);
   }
 }
 games.weeks.sort((a, b) => a.week - b.week);
@@ -169,14 +176,14 @@ if (!FIXTURES && (process.env.STATS === "1" || (now.getUTCDay() === 2 && daysOld
   let ok = 0;
   for (const k of KNOWN) {
     try { const l = await teamLeaders(k); teams.teams[k] = { ...(teams.teams[k] || {}), ...l }; ok++; }
-    catch (e) { console.error(`Stats for ${k} failed: ${e.message}`); }
+    catch (e) { warn(`Stats for ${k} failed: ${e.message}`); }
   }
   if (ok >= 28) {
     teams.updated = now.toISOString().slice(0, 10);
     const done = games.weeks.filter((w) => w.week <= 18 && w.games.length && w.games.every((g) => g.status === "final" || g.status === "off")).map((w) => w.week);
     if (done.length) teams.through = `Week ${Math.max(...done)}`;
   }
-  console.log(`Refreshed stats for ${ok} teams`);
+  note(`Refreshed stats for ${ok} teams`);
 }
 
 const changedGames = JSON.stringify(games.weeks) !== beforeGames;
@@ -186,5 +193,5 @@ if (changedGames) games.updated = now.toISOString();
 if (changedGames || schedDue) await writeFile(GAMES, JSON.stringify(games, null, 1) + "\n");
 if (changedTeams) await writeFile(TEAMS, JSON.stringify(teams) + "\n");
 const changed = changedGames || changedTeams || schedDue;
-console.log(changed ? "Updated games/teams" : "No changes");
+note(changed ? "Updated games/teams" : "No changes");
 if (process.env.GITHUB_OUTPUT) await appendFile(process.env.GITHUB_OUTPUT, `changed=${changed}\n`);
