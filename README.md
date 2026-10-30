@@ -38,5 +38,5 @@ On GitHub, go to **Actions → Update games and publish site → Run workflow**.
 - The site has three tabs: **Vote**, **Leaderboard** (each person's record by week and overall, plus slip history) and **Parlay Slip** (projected until the lock, then locked and graded as games finish).
 - If the majority pick ties its game, that leg counts as a push and doesn't bust the slip.
 - A tied vote between friends keeps that game off the slip until someone breaks the tie.
-- On a new phone or computer, tap **Already in the crew? Pick your name** to use your existing profile and picks. If you'd already made a second profile on that device, its picks move over and the extra profile is removed. There's no password, so this works on trust.
+- Each device remembers who you are. On a new phone or computer (or after Safari clears site data), the site opens with **Who's voting?**: tap your name to use your existing profile and picks. If you'd already made a second profile on that device, its picks move over and the extra profile is removed. There's no password, so this works on trust.
 - ESPN's scoreboard isn't an official public API. If it ever changes, the job will log an error under **Actions**, and the site keeps working with the last saved results.
