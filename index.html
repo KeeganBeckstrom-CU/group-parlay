@@ -316,7 +316,6 @@ table.lb{border-collapse:collapse;width:100%;min-width:520px;font-variant-numeri
         <label for="pf-hooper">Favorite white hooper<input id="pf-hooper" maxlength="32" placeholder="e.g. Larry Bird"></label>
       </div>
       <label for="pf-who" id="pf-whowrap" hidden>Who are you?<select id="pf-who"></select></label>
-      <label for="pf-pin" id="pf-pinwrap"><span id="pf-pinlabel">4-digit PIN</span><input id="pf-pin" class="pinin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="····"></label>
       <div class="hint" id="pf-hint"></div>
       <div class="err" id="pf-err" aria-live="polite"></div>
       <div class="row"><button class="btn ghost" type="button" id="pf-cancel">Cancel</button><button class="btn" type="submit" id="pf-submit">Save profile</button></div>
@@ -664,76 +663,55 @@ function vote(gid,side){
 const hasProfile=()=>{const v=S.uid&&S.votes[S.uid];return !!(v&&v.name&&v.hooper)};
 const initial=n=>(n||"?").trim().charAt(0).toUpperCase()||"?";
 const norm=n=>(n||"").trim().toLowerCase().replace(/\s+/g," ");
-const validPin=p=>/^[0-9]{4}$/.test(p);
-let pfMode="join",pfConflictOK=false;
+let pfMode="join",pfConflictOK=false,pfPreselect=null;
 function members(){return Object.entries(S.votes).filter(([,v])=>v&&v.name)}
+const pickCount=m=>m.picks?Object.values(m.picks).reduce((t,w)=>t+Object.keys(w||{}).length,0):0;
 function openProfile(mode){
   pfMode=mode;pfConflictOK=false;
   const v=(S.uid&&S.votes[S.uid])||{};
+  const others=members().filter(([id])=>id!==S.uid);
   const C={
-    join:["Join the crew","Make a profile to start voting. Your crew sees your name and your hooper.","Save profile","Already in the crew? Sign in"],
-    edit:["Edit your profile","Change how you show up to the crew.","Save","Not you? Sign in as someone else"],
-    pin:["Set your PIN","Pick a 4-digit PIN. You'll use it to sign in to your profile on your phone, computer or any other device.","Save PIN",""],
-    signin:["Sign in","Pick your profile and enter your PIN. This device will use your existing picks.","Sign in",hasProfile()?"":"New here? Make a profile"]}[mode];
+    join:["Join the crew","Make a profile to start voting. Your crew sees your name and your hooper.","Save profile",others.length?"Already in the crew? Pick your name":""],
+    edit:["Edit your profile","Change how you show up to the crew.","Save",others.length?"On another device already? Switch to that profile":""],
+    signin:["Pick your name","This device will use your existing profile and picks.","That's me",hasProfile()?"":"New here? Make a profile"]}[mode];
   $("pf-title").textContent=C[0];$("pf-sub").textContent=C[1];$("pf-submit").textContent=C[2];
   $("pf-swap").textContent=C[3];$("pf-swap").hidden=!C[3];
-  $("pf-newfields").hidden=!(mode==="join"||mode==="edit");$("pf-whowrap").hidden=mode!=="signin";
-  $("pf-conflict").hidden=true;$("pf-err").textContent="";$("pf-pin").value="";
+  $("pf-newfields").hidden=mode==="signin";$("pf-whowrap").hidden=mode!=="signin";
+  $("pf-conflict").hidden=true;$("pf-err").textContent="";
   $("pf-name").value=mode==="join"?"":(v.name||"");$("pf-hooper").value=mode==="join"?"":(v.hooper||"");
-  $("pf-pinlabel").textContent=mode==="edit"&&v.hasPin?"New PIN (leave blank to keep yours)":"4-digit PIN";
-  $("pf-hint").textContent=mode==="join"||mode==="pin"?"Remember it. It's how you get back to your profile on another device.":
-    mode==="signin"&&hasProfile()?"Your picks from this device move onto that profile, and this device's extra profile is removed.":"";
-  $("pf-cancel").textContent=mode==="pin"?"Later":"Cancel";
+  $("pf-hint").textContent=mode==="signin"&&hasProfile()?"Picks from this device move onto that profile, and this device's extra profile is removed.":"";
   if(mode==="signin"){const sel=$("pf-who");sel.replaceChildren(new Option("Choose your name",""));
-    const list=members().filter(([id])=>id!==S.uid).sort((a,b)=>a[1].name.localeCompare(b[1].name));
+    const list=others.sort((a,b)=>a[1].name.localeCompare(b[1].name));
     const dupes={};for(const [,m] of list){const k=norm(m.name);dupes[k]=(dupes[k]||0)+1}
-    for(const [id,m] of list){const n=m.picks?Object.values(m.picks).reduce((t,w)=>t+Object.keys(w||{}).length,0):0;
-      const o=new Option(m.name+(dupes[norm(m.name)]>1?" · "+m.hooper+" · "+n+" picks":"")+(m.hasPin?"":" (no PIN set yet)"),id);o.disabled=!m.hasPin;sel.append(o)}
+    for(const [id,m] of list)sel.append(new Option(m.name+(dupes[norm(m.name)]>1?" · "+(m.hooper||"no hooper")+" · "+pickCount(m)+" picks":""),id));
     if(pfPreselect){sel.value=pfPreselect;pfPreselect=null}}
-  $("profile").hidden=false;setTimeout(()=>(mode==="signin"?$("pf-who"):mode==="pin"?$("pf-pin"):$("pf-name")).focus(),30);
+  $("profile").hidden=false;setTimeout(()=>(mode==="signin"?$("pf-who"):$("pf-name")).focus(),30);
 }
-let pfPreselect=null;
 function closeProfile(){$("profile").hidden=true}
 $("pf-cancel").onclick=closeProfile;
 $("pf-swap").onclick=()=>openProfile(pfMode==="signin"?"join":"signin");
 $("profile").addEventListener("click",e=>{if(e.target.id==="profile")closeProfile()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("profile").hidden)closeProfile()});
-$("pf-pin").addEventListener("input",e=>{e.target.value=e.target.value.replace(/\D/g,"").slice(0,4)});
 $("pf-name").addEventListener("input",()=>{pfConflictOK=false;$("pf-conflict").hidden=true});
 const err=m=>{$("pf-err").textContent=m};
 $("pf-form").onsubmit=async e=>{e.preventDefault();err("");
   if(!db||!S.uid){err("Still connecting. Try again in a second.");return}
-  const pin=$("pf-pin").value.trim();
-  if(pfMode==="signin")return signIn(pin);
-  if(pfMode==="pin"){if(!validPin(pin)){err("Enter 4 digits.");return}
-    try{await savePin(pin);closeProfile();toast("PIN saved. Use it to sign in on your other devices.")}catch(x){err("Couldn't save the PIN. Try again.")}return}
+  if(pfMode==="signin"){const t=$("pf-who").value;if(!t){err("Choose your name.");return}return useProfile(t)}
   const n=$("pf-name").value.trim().slice(0,24),h=$("pf-hooper").value.trim().slice(0,32);
   if(!n){err("Add your name so the crew knows who's voting.");$("pf-name").focus();return}
   if(!h){err("Everybody has a favorite white hooper. Pick one.");$("pf-hooper").focus();return}
-  const mine=S.votes[S.uid]||{};
-  if(pfMode==="join"||!mine.hasPin){if(!validPin(pin)){err("Pick a 4-digit PIN.");$("pf-pin").focus();return}}
-  else if(pin&&!validPin(pin)){err("A PIN is 4 digits.");return}
   const twin=members().find(([id,m])=>id!==S.uid&&norm(m.name)===norm(n));
   if(twin&&!pfConflictOK){const c=$("pf-conflict");c.replaceChildren();
-    c.append(el("span",null,`There's already a ${twin[1].name} in the crew (hooper: ${twin[1].hooper||"none"}). If that's you, sign in instead of making a second profile.`));
-    const b=el("button",null,"Sign in as "+twin[1].name);b.type="button";b.onclick=()=>{pfPreselect=twin[0];openProfile("signin")};c.append(b);
+    c.append(el("span",null,`There's already a ${twin[1].name} in the crew (hooper: ${twin[1].hooper||"none"}). Is that you?`));
+    const b=el("button",null,"Yes, that's me");b.type="button";b.onclick=()=>useProfile(twin[0]);c.append(b);
     c.append(el("span",null,"Different person? Tap Save again."));c.hidden=false;pfConflictOK=true;return}
   const d=myDoc();const isNew=!hasProfile();d.name=n;d.hooper=h;d.picks=d.picks||{};if(!d.joinedAt)d.joinedAt=new Date().toISOString();
   S.votes[S.uid]=d;closeProfile();render();
-  await writeMine(d);
-  if(pin){try{await savePin(pin)}catch(x){toast("Profile saved, but the PIN didn't. Set it again from Edit.");return}}
-  toast(isNew?"Welcome to the crew, "+n:"Profile saved");
+  await writeMine(d);toast(isNew?"Welcome to the crew, "+n:"Profile saved");
 };
-async function savePin(pin){
-  await db.doc("pins/"+S.uid).set({pin});
-  const d=myDoc();if(!d.hasPin){d.hasPin=true;S.votes[S.uid]=d;render();await writeMine(d)}
-}
-async function signIn(pin){
-  const target=$("pf-who").value;
-  if(!target){err("Choose your name.");return}
-  if(!validPin(pin)){err("Enter your 4-digit PIN.");return}
-  try{await db.doc("links/"+S.authUid).set({pid:target,pin,at:new Date().toISOString()})}
-  catch(x){err(x&&x.code==="permission-denied"?"That PIN doesn't match. Try again.":"Couldn't sign in. Check your connection and try again.");return}
+async function useProfile(target){
+  try{await db.doc("links/"+S.authUid).set({pid:target,at:new Date().toISOString()})}
+  catch(x){err("Couldn't switch profiles. Check your connection and try again.");return}
   const old=S.uid,oldDoc=S.votes[old];S.uid=target;
   // Move this device's picks onto the profile, then remove the extra profile.
   if(old!==target&&oldDoc){
@@ -741,9 +719,8 @@ async function signIn(pin){
     for(const [wk,ps] of Object.entries(oldDoc.picks||{})){t.picks[wk]=t.picks[wk]||{};for(const [gid,side] of Object.entries(ps||{}))if(!t.picks[wk][gid]){t.picks[wk][gid]=side;moved++}}
     if(moved){t.updatedAt=new Date().toISOString();S.votes[target]=t;await writeMine(t)}
     try{await db.doc("votes/"+old).delete()}catch(x){}
-    try{await db.doc("pins/"+old).delete()}catch(x){}
   }
-  closeProfile();render();toast("Signed in as "+(S.votes[target]?S.votes[target].name:"you"));
+  closeProfile();render();toast("You're in as "+(S.votes[target]?S.votes[target].name:"your profile"));
 }
 function renderMe(){
   const box=$("mebox");box.replaceChildren();
@@ -811,7 +788,7 @@ function loadTeams(){fetch("teams.json?v="+Date.now(),{cache:"no-store"}).then(r
   try{const l=await db.doc("links/"+S.authUid).get();if(l.exists&&l.data().pid)S.uid=l.data().pid}catch(e){}
   let askedProfile=false;
   db.collection("votes").onSnapshot(snap=>{const o={};snap.docs.forEach(d=>{o[d.id]=d.data()});S.votes=o;render();
-    if(!askedProfile&&S.uid&&!snap.metadata.fromCache){askedProfile=true;if(!hasProfile())openProfile(members().length?"join":"join");else if(!S.votes[S.uid].hasPin)openProfile("pin")}},()=>notice("Lost connection to voting. Reload the page."));
+    if(!askedProfile&&S.uid&&!snap.metadata.fromCache){askedProfile=true;if(!hasProfile())openProfile("join")}},()=>notice("Lost connection to voting. Reload the page."));
 })();
 </script>
 </body>

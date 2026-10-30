@@ -2,7 +2,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // A device "owns" a profile if it created it, or signed in to it with the profile's PIN.
+    // A device "owns" a profile if it created it, or picked it with "Already in the crew? Pick your name".
     function linkedTo(pid) {
       return exists(/databases/$(database)/documents/links/$(request.auth.uid))
         && get(/databases/$(database)/documents/links/$(request.auth.uid)).data.pid == pid;
@@ -21,22 +21,12 @@ service cloud.firestore {
       allow delete: if owns(pid);
     }
 
-    // Each profile's PIN. Nobody can read it; only the owner can set or change it.
-    match /pins/{pid} {
-      allow read: if false;
-      allow create, update: if owns(pid)
-        && request.resource.data.keys().hasOnly(['pin'])
-        && request.resource.data.pin is string && request.resource.data.pin.matches('^[0-9]{4}$');
-      allow delete: if owns(pid);
-    }
-
-    // Signing a device in to a profile: only allowed with the right PIN.
+    // Which profile each device uses. A device can point itself at any existing profile.
     match /links/{uid} {
       allow get: if request.auth != null && request.auth.uid == uid;
       allow create, update: if request.auth != null && request.auth.uid == uid
-        && request.resource.data.keys().hasOnly(['pid', 'pin', 'at'])
-        && exists(/databases/$(database)/documents/pins/$(request.resource.data.pid))
-        && request.resource.data.pin == get(/databases/$(database)/documents/pins/$(request.resource.data.pid)).data.pin;
+        && request.resource.data.keys().hasOnly(['pid', 'at'])
+        && exists(/databases/$(database)/documents/votes/$(request.resource.data.pid));
       allow delete: if request.auth != null && request.auth.uid == uid;
     }
 
