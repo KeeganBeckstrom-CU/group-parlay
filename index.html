@@ -199,6 +199,62 @@ details.scout[open] summary::after{transform:rotate(225deg) translateY(-2px)}
 .owner .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;color:var(--muted);font-size:13px}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--white);color:var(--navy-deep);font-weight:600;padding:8px 14px;border-radius:3px;box-shadow:3px 3px 0 var(--red);font-size:13px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.views{display:flex;gap:4px;margin:0 0 18px;border-bottom:2px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.views::-webkit-scrollbar{display:none}
+.views button{font-family:var(--display);font-weight:400;font-size:15px;letter-spacing:.02em;background:none;border:0;color:var(--muted);padding:12px 14px 12px;border-bottom:4px solid transparent;margin-bottom:-2px;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.views button:hover{color:var(--white)}
+.views button[aria-selected="true"]{color:var(--white);border-bottom-color:var(--red)}
+.views .badge{font-family:var(--num);font-size:16px;line-height:1;padding:3px 7px 1px;border-radius:999px;background:var(--red);color:#fff}
+.views .badge.lock{background:var(--gold);color:var(--navy-deep)}
+.panel{background:var(--navy-mid);border:1px solid var(--line);border-radius:14px;padding:14px}
+.panel h3{margin:0 0 10px;font-family:var(--display);font-weight:400;font-size:16px;color:var(--white);display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.panel h3 small{font-family:var(--cond);font-weight:700;font-size:12px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.slipmini{position:relative;overflow:hidden;padding-top:18px}
+.slipmini::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(var(--red) 0 3px,var(--white) 3px 6px)}
+.slipmini .big{display:flex;align-items:baseline;gap:10px}
+.slipmini .big b{font-family:var(--num);font-weight:700;font-size:54px;line-height:.8}
+.slipmini .big span{font-family:var(--cond);font-weight:700;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.slipmini p{margin:10px 0 12px;color:var(--muted);font-size:13px}
+.slipmini p b{color:var(--gold);font-weight:700}
+.slipmini .btn{width:100%}
+.slipwrap{display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:900px){.slipwrap{grid-template-columns:minmax(0,1fr)}}
+.slipside{display:flex;flex-direction:column;gap:16px;min-width:0}
+.countdown{font-family:var(--num);font-weight:600;font-size:40px;line-height:.9;color:var(--white)}
+.countdown small{display:block;font-family:var(--cond);font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.mini{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.mini li{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--muted)}
+.mini li b{color:var(--white);font-weight:600}
+.copybtn{margin-top:14px;width:100%;background:var(--navy);color:#fff;border:0;border-radius:6px;padding:10px 14px;font-family:var(--cond);font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.lbwrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--navy-mid)}
+table.lb{border-collapse:collapse;width:100%;min-width:520px;font-variant-numeric:tabular-nums}
+.lb th{font-family:var(--cond);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:center;padding:12px 10px;white-space:nowrap}
+.lb th.l,.lb td.l{text-align:left}
+.lb td{padding:10px;border-top:1px solid rgba(255,255,255,.07);text-align:center;white-space:nowrap}
+.lb .rk{font-family:var(--num);font-weight:700;font-size:24px;width:44px;color:var(--muted)}
+.lb tr.first .rk{color:var(--gold)}
+.lb .pl{position:sticky;left:0;background:var(--navy-mid);min-width:150px}
+.lb .pl b{display:block;font-weight:700}
+.lb .pl small{display:block;color:var(--muted);font-size:12px;max-width:170px;overflow:hidden;text-overflow:ellipsis}
+.lb .pl small em{font-style:normal;color:var(--gold)}
+.lb .ov{font-family:var(--num);font-weight:600;font-size:24px;line-height:1}
+.lb .pct{font-family:var(--num);font-size:20px;color:var(--muted)}
+.lb .wk{font-family:var(--num);font-size:20px;line-height:1}
+.lb .wk.best{color:var(--gold)}
+.lb .wk.best::after{content:"\2605";font-size:11px;vertical-align:5px;margin-left:2px}
+.lb .wk.none{color:rgba(255,255,255,.25)}
+.lbgrid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:28px;align-items:start}
+@media (max-width:900px){.lbgrid{grid-template-columns:minmax(0,1fr)}}
+.lbnote{color:var(--muted);font-size:12px;margin:10px 2px 0}
+.hist{list-style:none;margin:0;padding:0}
+.hist li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 0;border-top:1px solid rgba(255,255,255,.07)}
+.hist li:first-child{border-top:0}
+.hist .wkn{font-family:var(--num);font-size:20px;line-height:1;min-width:58px}
+.hist .lg{color:var(--muted);font-size:13px}
+.pill{font-family:var(--cond);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:rgba(255,255,255,.08);color:var(--muted)}
+.pill.cash{background:#1f9d5a;color:#fff}.pill.bust{background:var(--red);color:#fff}.pill.locked{background:var(--gold);color:var(--navy-deep)}.pill.open{background:rgba(213,10,10,.18);color:#ff8a80}
+.legs li.early .pk{text-decoration:none!important}
+.legs li.early{border-color:rgba(255,255,255,.1)}
 .foot{max-width:1180px;margin:0 auto;padding-block:8px 32px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;color:var(--muted);font-size:12px}
 .foot button{background:none;border:0;color:var(--muted);text-decoration:underline;padding:0;font-size:12px}
 .setup{max-width:640px;margin:40px auto;background:var(--navy-mid);border:1px solid var(--line);border-radius:14px;padding:20px;line-height:1.6}
@@ -212,21 +268,34 @@ details.scout[open] summary::after{transform:rotate(225deg) translateY(-2px)}
     <div class="mark">
       <span class="eyebrow">Sunday ballot · majority rules</span>
       <h1>Group <em>Parlay</em></h1>
-      <p>Everybody votes every game. The side with the most votes becomes a leg of this week's ticket.</p>
+      <p>Everybody votes every game. The side with the most votes becomes a leg of this week's parlay slip.</p>
     </div>
     <div id="mebox"></div>
   </div>
 </div>
 
 <div class="wrap">
+  <nav class="views" role="tablist" aria-label="Views">
+    <button type="button" role="tab" id="tab-vote" data-view="vote">Vote</button>
+    <button type="button" role="tab" id="tab-leaderboard" data-view="leaderboard">Leaderboard</button>
+    <button type="button" role="tab" id="tab-slip" data-view="slip">Parlay Slip <span class="badge" id="slipbadge" hidden></span></button>
+  </nav>
   <div class="weeks" id="weeks" role="group" aria-label="Week"></div>
   <div class="notice" id="notice" hidden></div>
-  <div class="grid">
-    <main id="board">
-      <div class="empty" id="loading">Loading this week's slate. Each game shows both teams in their colors; tap the one you think wins.</div>
-    </main>
-    <div class="sidecol"><aside class="ticket" id="ticket" aria-label="Group parlay ticket"></aside><section class="crew" id="crew" aria-label="The crew"></section></div>
-  </div>
+  <section class="view" id="view-vote" role="tabpanel" aria-labelledby="tab-vote">
+    <div class="grid">
+      <main id="board">
+        <div class="empty" id="loading">Loading this week's slate. Each game shows both teams in their colors; tap the one you think wins.</div>
+      </main>
+      <div class="sidecol"><aside class="panel slipmini" id="slipmini" aria-label="Parlay slip summary"></aside><section class="crew" id="crew" aria-label="The crew"></section></div>
+    </div>
+  </section>
+  <section class="view" id="view-leaderboard" role="tabpanel" aria-labelledby="tab-leaderboard" hidden>
+    <div class="lbgrid"><div id="lb"></div><aside class="panel" id="history" aria-label="Ticket history"></aside></div>
+  </section>
+  <section class="view" id="view-slip" role="tabpanel" aria-labelledby="tab-slip" hidden>
+    <div class="slipwrap"><aside class="ticket" id="ticket" aria-label="Group parlay slip"></aside><div class="slipside" id="slipside"></div></div>
+  </section>
 </div>
 <footer class="foot"><span id="statsnote">Team stats from ESPN.</span><span id="updnote"></span></footer>
 <div class="toast" id="toast" hidden></div>
@@ -252,7 +321,7 @@ details.scout[open] summary::after{transform:rotate(225deg) translateY(-2px)}
 const TEAMS={
 ARI:["Arizona Cardinals","#97233F","#FFB612","#FFFFFF"],ATL:["Atlanta Falcons","#A71930","#000000","#FFFFFF"],BAL:["Baltimore Ravens","#241773","#9E7C0C","#FFFFFF"],BUF:["Buffalo Bills","#00338D","#C60C30","#FFFFFF"],
 CAR:["Carolina Panthers","#0085CA","#101820","#FFFFFF"],CHI:["Chicago Bears","#0B162A","#C83803","#FFFFFF"],CIN:["Cincinnati Bengals","#FB4F14","#000000","#000000"],CLE:["Cleveland Browns","#311D00","#FF3C00","#FFFFFF"],
-DAL:["Dallas Cowboys","#003594","#869397","#FFFFFF"],DEN:["Denver Broncos","#FB4F14","#002244","#002244"],DET:["Detroit Lions","#0076B6","#B0B7BC","#FFFFFF"],GB:["Green Bay Packers","#203731","#FFB612","#FFB612"],
+DAL:["Dallas Cowboys","#041E42","#869397","#FFFFFF"],DEN:["Denver Broncos","#FB4F14","#002244","#002244"],DET:["Detroit Lions","#0076B6","#B0B7BC","#FFFFFF"],GB:["Green Bay Packers","#203731","#FFB612","#FFB612"],
 HOU:["Houston Texans","#03202F","#A71930","#FFFFFF"],IND:["Indianapolis Colts","#002C5F","#A2AAAD","#FFFFFF"],JAX:["Jacksonville Jaguars","#006778","#D7A22A","#FFFFFF"],KC:["Kansas City Chiefs","#E31837","#FFB81C","#FFFFFF"],
 LV:["Las Vegas Raiders","#000000","#A5ACAF","#FFFFFF"],LAC:["Los Angeles Chargers","#0080C6","#FFC20E","#FFFFFF"],LAR:["Los Angeles Rams","#003594","#FFA300","#FFFFFF"],MIA:["Miami Dolphins","#008E97","#FC4C02","#FFFFFF"],
 MIN:["Minnesota Vikings","#4F2683","#FFC62F","#FFFFFF"],NE:["New England Patriots","#002244","#C60C30","#FFFFFF"],NO:["New Orleans Saints","#D3BC8D","#101820","#101820"],NYG:["New York Giants","#0B2265","#A71930","#FFFFFF"],
@@ -262,9 +331,11 @@ const tname=a=>(TEAMS[a]||[a])[0];
 const nick=a=>tname(a).split(" ").slice(-1)[0];
 const tvars=(el,a,pre="")=>{const t=TEAMS[a];if(!t)return;el.style.setProperty("--tp"+pre,t[1]);el.style.setProperty("--ts"+pre,t[2]);el.style.setProperty("--tt"+pre,t[3])};
 let helmN=0;
+// Helmets that don't match the team's primary color
+const HELM={DAL:{shell:"#B0B7BC",stripe:"#041E42",mask:"#041E42"}};
 function helmet(ab,flip){
-  const t=TEAMS[ab]||["","#888888","#cccccc","#ffffff"];const p=t[1],s2=t[2],tt=t[3];
-  const mask=(s2==="#000000"&&p==="#000000")?"#A5ACAF":s2;
+  const t=TEAMS[ab]||["","#888888","#cccccc","#ffffff"];const H=HELM[ab]||{};const p=H.shell||t[1],s2=H.stripe||t[2],tt=t[3];
+  const mask=H.mask||((s2==="#000000"&&p==="#000000")?"#A5ACAF":s2);
   const ink="#0d1424";
   const n=++helmN,clip="hc"+n;
   const shell="M14 86C0 70-2 36 16 18 32 2 64-4 86 6c20 10 28 28 24 46l-13 2c-6 1-10 5-11 11l2 23c-9 9-25 14-40 14-16 0-28-6-34-16Z";
@@ -300,7 +371,19 @@ let db=null,user=null,toastT;
 
 function toast(m){const t=$("toast");t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,2200)}
 function notice(m){const n=$("notice");n.textContent=m||"";n.hidden=!m}
-const locked=g=>Date.now()>=Date.parse(g.kickoff)||(!!g.status&&g.status!=="scheduled");
+// Weekly lock: Sunday 12:45 PM Eastern. Games before that lock at their own kickoff and aren't on the slip.
+const ET="America/New_York";
+function etParts(d){const o={};for(const p of new Intl.DateTimeFormat("en-US",{timeZone:ET,year:"numeric",month:"2-digit",day:"2-digit",weekday:"short",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(d))o[p.type]=p.value;return o}
+function etToUtc(y,m,d,h,mi){const want=Date.UTC(y,m-1,d,h,mi);let t=want;for(let i=0;i<3;i++){const p=etParts(new Date(t));t+=want-Date.UTC(+p.year,+p.month-1,+p.day,+p.hour,+p.minute)}return t}
+function weekLockTime(games){
+  if(!games.length)return Infinity;
+  const sun=games.map(g=>etParts(new Date(g.kickoff))).find(p=>p.weekday==="Sun");
+  if(sun)return etToUtc(+sun.year,+sun.month,+sun.day,12,45);
+  return Math.min(...games.map(g=>Date.parse(g.kickoff)))-15*60e3;
+}
+const locked=g=>Date.now()>=(g.lockAt??Date.parse(g.kickoff))||(!!g.status&&g.status!=="scheduled");
+const fmtLock=t=>new Date(t).toLocaleString([], {weekday:"short",hour:"numeric",minute:"2-digit"});
+function fmtUntil(ms){if(ms<=0)return "now";const m=Math.round(ms/6e4),d=Math.floor(m/1440),h=Math.floor(m%1440/60),mm=m%60;return d?`${d}d ${h}h`:h?`${h}h ${mm}m`:`${mm}m`}
 const fmtDay=iso=>new Date(iso).toLocaleDateString([], {weekday:"long",month:"short",day:"numeric"});
 const fmtTime=iso=>new Date(iso).toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});
 function voterName(uid){const v=S.votes[uid];return (v&&v.name)||(S.profiles[uid]&&S.profiles[uid].name)||"Someone"}
@@ -391,46 +474,160 @@ function renderBoard(){
   }
 }
 
-function renderTicket(){
-  const tk=$("ticket");tk.replaceChildren();
-  const w=S.weeks["w"+S.week];
-  const voters=new Set();for(const [uid,v] of Object.entries(S.votes)){if(v.picks&&v.picks[S.week]&&Object.keys(v.picks[S.week]).length)voters.add(uid)}
-  const meta=el("div","tmeta");meta.append(el("span",null,"Week "+(S.week??"–")),el("span",null,voters.size+" voter"+(voters.size===1?"":"s")));
-  tk.append(meta,el("h2",null,"The Ticket"),el("div","stripes"));
-  const games=w&&w.games?[...w.games].sort((a,b)=>Date.parse(a.kickoff)-Date.parse(b.kickoff)):[];
-  const legs=[],ties=[];let won=0,lost=0;
-  let pushes=0;for(const g of games){const t=tally(S.week,g);if(t.lead==="away"||t.lead==="home"){const r=g.winner||(w.results||{})[g.id];const st=r?(r==="tie"?"p":r===t.lead?"w":"l"):"";if(st==="w")won++;if(st==="l")lost++;if(st==="p")pushes++;legs.push({g,t,st})}else if(t.lead==="tie")ties.push({g,t})}
-  const st=el("div","status");
-  const allDone=games.length&&games.every(g=>g.status==="final"||g.status==="off"||!tally(S.week,g).total);
-  if(!legs.length)st.textContent="Waiting on votes";
-  else if(lost){st.classList.add("bust");st.textContent="Busted · "+lost+" leg"+(lost>1?"s":"")+" lost"}
-  else if(won+pushes===legs.length&&won&&!ties.length&&allDone){st.classList.add("cash");st.textContent="Cashed · "+won+" for "+won+(pushes?" (+"+pushes+" push)":"")}
-  else{st.classList.add("live");st.textContent=legs.length+"-leg parlay"+(won?" · "+won+" hit":"")}
-  tk.append(st);
-  const ul=el("ul","legs");
-  for(const {g,t,st} of legs){
-    const team=g[t.lead],opp=t.lead==="away"?g.home:g.away;
-    const li=el("li",st||null);const sw=el("span","sw",team);tvars(sw,team);
-    const pk=el("span","pk",tname(team));pk.append(el("small",null,(t.lead==="away"?"at ":"vs ")+opp+" · "+new Date(g.kickoff).toLocaleDateString([], {weekday:"short"})+" "+fmtTime(g.kickoff)));
-    const vt=el("span","vt",t[t.lead].length+"–"+t[t.lead==="away"?"home":"away"].length);vt.append(el("i",null,st==="w"?"Hit":st==="l"?"Miss":st==="p"?"Push":g.status==="live"?"Live":"Votes"));
-    li.append(sw,pk,vt);ul.append(li);
-  }
-  for(const {g,t} of ties){
-    const li=el("li","tie");const sw=el("span","sw","?");sw.style.setProperty("--tp","#e4d8bd");sw.style.setProperty("--tt","#8a5a00");sw.style.setProperty("--ts","#cdbf9f");
-    const pk=el("span","pk",g.away+" or "+g.home);pk.append(el("small",null,"Tied vote, not on the ticket yet"));
-    const vt=el("span","vt",t.away.length+"–"+t.home.length);vt.append(el("i",null,"Tie"));li.append(sw,pk,vt);ul.append(li);
-  }
-  if(!legs.length&&!ties.length){const li=el("li",null,"Legs show up here as soon as games get votes. Majority side wins each leg.");li.style.display="block";li.style.color="#6b5f45";ul.append(li)}
-  tk.append(ul);
-  const ft=el("div","tfoot");const open=games.filter(g=>!locked(g)).length;
-  ft.append(el("span",null,open?open+" game"+(open===1?"":"s")+" still open. Votes lock at kickoff.":"Every game has kicked off. Votes are locked."));
-  ft.append(el("span",null,"Ties stay off the ticket until someone breaks them."));
-  tk.append(ft);
+function slipFor(n){
+  const w=S.weeks["w"+n];if(!w)return null;
+  const games=[...w.games].sort((a,b)=>Date.parse(a.kickoff)-Date.parse(b.kickoff));
+  const on=games.filter(g=>g.onSlip&&g.status!=="off"),early=games.filter(g=>!g.onSlip);
+  const legs=[],ties=[],open=[];let won=0,lost=0,pushes=0;
+  for(const g of on){const t=tally(n,g);
+    if(t.lead==="away"||t.lead==="home"){const r=g.winner;const st=r?(r==="tie"?"p":r===t.lead?"w":"l"):"";if(st==="w")won++;if(st==="l")lost++;if(st==="p")pushes++;legs.push({g,t,st})}
+    else if(t.lead==="tie")ties.push({g,t});else open.push(g)}
+  const isLocked=Date.now()>=w.lock,allDone=legs.length&&legs.every(x=>x.st);
+  const state=!legs.length?(isLocked?"none":"empty"):lost?"bust":(isLocked&&allDone&&won)?"cash":isLocked?"locked":"open";
+  return {w,games,on,early,legs,ties,open,won,lost,pushes,isLocked,state};
 }
+function slipStatus(sl){
+  if(!sl)return["","Waiting on the schedule"];
+  const n=sl.legs.length;
+  return {empty:["","Waiting on votes"],none:["","No slip this week"],open:["live","Projected · "+n+" leg"+(n===1?"":"s")],
+    locked:["live","Locked · "+n+" leg"+(n===1?"":"s")+(sl.won?" · "+sl.won+" hit":"")],
+    bust:["bust","Busted · "+sl.lost+" leg"+(sl.lost===1?"":"s")+" lost"],
+    cash:["cash","Cashed · "+sl.won+" for "+sl.won+(sl.pushes?" (+"+sl.pushes+" push)":"")]}[sl.state];
+}
+function legRow(team,opp,g,label,cls,votes){
+  const li=el("li",cls||null);const sw=el("span","sw",team);tvars(sw,team);
+  const pk=el("span","pk",tname(team));pk.append(el("small",null,(team===g.away?"at ":"vs ")+opp+" · "+new Date(g.kickoff).toLocaleDateString([], {weekday:"short"})+" "+fmtTime(g.kickoff)));
+  const vt=el("span","vt",votes);vt.append(el("i",null,label));li.append(sw,pk,vt);return li;
+}
+function renderSlip(){
+  const tk=$("ticket");tk.replaceChildren();const side=$("slipside");side.replaceChildren();
+  const sl=slipFor(S.week);
+  const voters=new Set();for(const [uid,v] of Object.entries(S.votes)){if(v.picks&&v.picks[S.week]&&Object.keys(v.picks[S.week]).length)voters.add(uid)}
+  const meta=el("div","tmeta");meta.append(el("span",null,(sl&&sl.w.label)||("Week "+(S.week??"–"))),el("span",null,voters.size+" voter"+(voters.size===1?"":"s")));
+  tk.append(meta,el("h2",null,"The Parlay Slip"),el("div","stripes"));
+  const [cls,txt]=slipStatus(sl);const st=el("div","status"+(cls?" "+cls:""),txt);tk.append(st);
+  const ul=el("ul","legs");
+  if(sl){
+    for(const {g,t,st} of sl.legs){const team=g[t.lead],opp=t.lead==="away"?g.home:g.away;
+      ul.append(legRow(team,opp,g,st==="w"?"Hit":st==="l"?"Miss":st==="p"?"Push":sl.isLocked?"Locked":"Votes",st||null,t[t.lead].length+"–"+t[t.lead==="away"?"home":"away"].length))}
+    for(const {g,t} of sl.ties){const li=el("li","tie");const sw=el("span","sw","?");sw.style.setProperty("--tp","#e4d8bd");sw.style.setProperty("--tt","#8a5a00");sw.style.setProperty("--ts","#cdbf9f");
+      const pk=el("span","pk",g.away+" or "+g.home);pk.append(el("small",null,sl.isLocked?"Tied vote, left off the slip":"Tied vote, not on the slip yet"));
+      const vt=el("span","vt",t.away.length+"–"+t.home.length);vt.append(el("i",null,"Tie"));li.append(sw,pk,vt);ul.append(li)}
+    if(!sl.legs.length&&!sl.ties.length){const li=el("li",null,sl.isLocked?"Nobody voted on the slip games before the lock.":"Legs show up here as soon as games get votes. Majority side wins each leg.");li.style.display="block";li.style.color="#6b5f45";ul.append(li)}
+  }
+  tk.append(ul);
+  const ft=el("div","tfoot");
+  if(sl&&isFinite(sl.w.lock)){
+    ft.append(el("span",null,sl.isLocked?"Locked "+fmtLock(sl.w.lock)+". Results fill in as games go final.":"Locks "+fmtLock(sl.w.lock)+". Until then this is a projection and changes as votes come in."));
+    if(sl.open.length&&!sl.isLocked)ft.append(el("span",null,sl.open.length+" slip game"+(sl.open.length===1?" has":"s have")+" no votes yet."));
+    ft.append(el("span",null,"Ties stay off the slip until someone breaks them."));
+  }
+  tk.append(ft);
+  if(sl&&sl.legs.length){const cb=el("button","copybtn",sl.isLocked?"Copy slip":"Copy projected slip");cb.type="button";cb.onclick=()=>copySlip(sl);tk.append(cb)}
+
+  // side: countdown + early games
+  if(sl&&isFinite(sl.w.lock)){
+    const p=el("section","panel");p.append(el("h3",null,sl.isLocked?"Slip locked":"Slip locks in"));
+    const cd=el("div","countdown",sl.isLocked?fmtLock(sl.w.lock):fmtUntil(sl.w.lock-Date.now()));cd.append(el("small",null,sl.isLocked?"Votes on slip games are final":fmtLock(sl.w.lock)+" · 15 min before the 1 PM games"));p.append(cd);
+    const mini=el("ul","mini");mini.style.marginTop="14px";
+    const add=(k,v)=>{const li=el("li");li.append(k,el("b",null,v));mini.append(li)};
+    add("Games on the slip",String(sl.on.length));add("Legs with a majority",String(sl.legs.length));add("Tied",String(sl.ties.length));if(!sl.isLocked)add("No votes yet",String(sl.open.length));
+    p.append(mini);side.append(p);
+  }
+  if(sl&&sl.early.length){
+    const p=el("section","panel");const h=el("h3",null,"Before the lock");h.append(el("small",null,"Not on the slip"));p.append(h);
+    const u=el("ul","legs");u.style.borderTop="0";
+    for(const g of sl.early){const t=tally(S.week,g);const lead=t.lead==="away"||t.lead==="home"?t.lead:null;
+      const team=lead?g[lead]:g.away,opp=lead?(lead==="away"?g.home:g.away):g.home;
+      const st=lead&&g.winner?(g.winner==="tie"?"p":g.winner===lead?"w":"l"):"";
+      const li=legRow(team,opp,g,!lead?(t.total?"Tie":"No votes"):st==="w"?"Hit":st==="l"?"Miss":st==="p"?"Push":"Votes","early "+(st||""),lead?t[lead].length+"–"+t[lead==="away"?"home":"away"].length:"–");
+      li.querySelector(".pk").style.color="var(--white)";li.querySelector(".pk small").style.color="var(--muted)";u.append(li)}
+    p.append(u);p.append(el("div","lbnote","These kicked off before Sunday's lock, so they count toward the leaderboard but not the parlay."));side.append(p);
+  }
+}
+async function copySlip(sl){
+  const lines=[`${sl.w.label||"Week "+sl.w.week} Group Parlay · ${sl.legs.length} legs${sl.isLocked?"":" (projected)"}`];
+  sl.legs.forEach(({g,t},i)=>{const team=g[t.lead],opp=t.lead==="away"?g.home:g.away;lines.push(`${i+1}. ${tname(team)} (${team===g.away?"at":"vs"} ${opp})`)});
+  const text=lines.join("\n");
+  try{await navigator.clipboard.writeText(text);toast("Slip copied")}catch(e){const ta=el("textarea");ta.value=text;document.body.append(ta);ta.select();try{document.execCommand("copy");toast("Slip copied")}catch(_){toast("Couldn't copy. Select the slip and copy it by hand.")}ta.remove()}
+}
+function renderSlipMini(){
+  const m=$("slipmini");m.replaceChildren();const sl=slipFor(S.week);
+  const h=el("h3",null,"Parlay Slip");h.append(el("small",null,sl?(sl.w.label||"Week "+sl.w.week):""));m.append(h);
+  const big=el("div","big");big.append(el("b",null,sl?String(sl.legs.length):"0"),el("span",null,"leg"+(sl&&sl.legs.length===1?"":"s")+(sl&&sl.isLocked?" locked":" so far")));m.append(big);
+  const p=el("p");
+  if(sl&&isFinite(sl.w.lock)){if(sl.isLocked){p.append(slipStatus(sl)[1]+". ")}else{p.append("Locks ",el("b",null,fmtLock(sl.w.lock))," (in "+fmtUntil(sl.w.lock-Date.now())+").")}}
+  else p.textContent="The slip builds from the majority pick on each game.";
+  m.append(p);
+  const b=el("button","btn","View slip");b.type="button";b.onclick=()=>go("slip");m.append(b);
+  const badge=$("slipbadge");if(sl&&sl.legs.length){badge.hidden=false;badge.textContent=sl.legs.length;badge.className="badge"+(sl.isLocked?" lock":"")}else badge.hidden=true;
+}
+
+function recordsByUser(){
+  const weeks=Object.values(S.weeks).sort((a,b)=>a.week-b.week);
+  const rec={};
+  for(const [uid,v] of Object.entries(S.votes)){if(!v||!v.name)continue;const r={w:0,l:0,t:0,weeks:{}};
+    for(const w of weeks){const picks=(v.picks&&v.picks[w.week])||{};const wr={w:0,l:0,t:0};
+      for(const g of w.games){const p=picks[g.id];if(!p||!g.winner)continue;if(g.winner==="tie")wr.t++;else if(g.winner===p)wr.w++;else wr.l++}
+      if(wr.w+wr.l+wr.t){r.weeks[w.week]=wr;r.w+=wr.w;r.l+=wr.l;r.t+=wr.t}}
+    rec[uid]=r}
+  return {weeks,rec};
+}
+const fmtRec=r=>r.w+"–"+r.l+(r.t?"–"+r.t:"");
+const pct=r=>r.w+r.l?r.w/(r.w+r.l):0;
+function renderLeaderboard(){
+  const box=$("lb");box.replaceChildren();
+  const {weeks,rec}=recordsByUser();
+  const scored=weeks.filter(w=>w.games.some(g=>g.winner));
+  const rows=Object.entries(rec).sort((a,b)=>b[1].w-a[1].w||pct(b[1])-pct(a[1])||a[1].l-b[1].l||(S.votes[a[0]].name||"").localeCompare(S.votes[b[0]].name||""));
+  const h=el("h3",null,"Leaderboard");h.style.cssText="margin:0 0 12px;font-family:var(--display);font-weight:400;font-size:20px";box.append(h);
+  if(!rows.length){box.append(el("div","empty","Nobody's on the board yet. Records start once people vote and games go final."));renderHistory();return}
+  const best={};for(const w of scored){let m=-1;for(const [,r] of rows){const x=r.weeks[w.week];if(x&&x.w>m)m=x.w}best[w.week]=m}
+  const wrap=el("div","lbwrap");const t=el("table","lb");
+  const thead=el("thead");const hr=el("tr");
+  for(const [c,txt] of [["","#"],["l","Player"],["","Overall"],["","Win %"]])hr.append(el("th",c||null,txt));
+  for(const w of scored)hr.append(el("th",null,w.label||"Wk "+w.week));
+  thead.append(hr);t.append(thead);
+  const tb=el("tbody");let rank=0,prev=null;
+  rows.forEach(([uid,r],i)=>{const key=r.w+"/"+r.l;if(key!==prev){rank=i+1;prev=key}
+    const tr=el("tr",rank===1&&(r.w+r.l)?"first":null);
+    tr.append(el("td","rk",String(rank)));
+    const pl=el("td","pl l");const v=S.votes[uid];pl.append(el("b",null,v.name+(uid===S.uid?" (you)":"")));const sm=el("small");if(v.hooper)sm.append("Hooper: ",el("em",null,v.hooper));pl.append(sm);tr.append(pl);
+    tr.append(el("td","ov",fmtRec(r)),el("td","pct",r.w+r.l?(pct(r)).toFixed(3).replace(/^0/,""):"–"));
+    for(const w of scored){const x=r.weeks[w.week];const c=el("td","wk"+(x?(x.w===best[w.week]&&x.w>0?" best":""):" none"),x?fmtRec(x):"–");tr.append(c)}
+    tb.append(tr)});
+  t.append(tb);wrap.append(t);box.append(wrap);
+  box.append(el("div","lbnote","Each pick counts once its game goes final. Ties don't count as wins or losses. ★ marks the best week."));
+  renderHistory();
+}
+function renderHistory(){
+  const p=$("history");p.replaceChildren();const h=el("h3",null,"Slip history");p.append(h);
+  const weeks=Object.values(S.weeks).sort((a,b)=>b.week-a.week);
+  const ul=el("ul","hist");let any=false;
+  for(const w of weeks){const sl=slipFor(w.week);if(!sl)continue;if(!sl.legs.length&&!sl.isLocked)continue;any=true;
+    const li=el("li");li.append(el("span","wkn",w.label||"Week "+w.week));
+    const settled=sl.won+sl.lost+sl.pushes;li.append(el("span","lg",sl.legs.length?`${sl.won} of ${sl.legs.length} legs hit${settled<sl.legs.length?" so far":""}`:"No slip"));
+    const pc={cash:["cash","Cashed"],bust:["bust","Busted"],locked:["locked","Locked"],open:["open","Projected"],none:["","—"],empty:["","—"]}[sl.state];
+    li.append(el("span","pill "+pc[0],pc[1]));ul.append(li)}
+  if(!any)p.append(el("div","lbnote","Every week's slip shows up here once it locks, with how many legs hit."));else p.append(ul);
+}
+
+// ---------- views ----------
+const VIEWS=["vote","leaderboard","slip"];
+function go(v){if(location.hash!=="#"+v)location.hash=v;else showView()}
+function showView(){
+  const v=VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):"vote";
+  for(const x of VIEWS){$("view-"+x).hidden=x!==v;$("tab-"+x).setAttribute("aria-selected",String(x===v))}
+  $("weeks").hidden=v==="leaderboard";
+  window.scrollTo({top:0});
+}
+document.querySelectorAll(".views button").forEach(b=>b.onclick=()=>go(b.dataset.view));
+window.addEventListener("hashchange",showView);
+showView();
 
 async function render(){
   if(user){const ids=Object.keys(S.votes);if(ids.length){try{S.profiles=await user.profiles(ids)}catch(e){}}}
-  renderWeeks();renderBoard();renderTicket();
+  renderWeeks();renderBoard();renderSlip();renderSlipMini();renderLeaderboard();
   renderMe();renderCrew();
 }
 
@@ -516,19 +713,20 @@ async function loadGames(){
     if(txt===lastGames)return;lastGames=txt;
     const data=JSON.parse(txt);const o={};
     for(const w of data.weeks||[]){const results={};for(const g of w.games||[])if(g.winner)results[g.id]=g.winner;o["w"+w.week]={week:w.week,label:w.label,games:w.games||[],results}}
+    for(const k in o){const w=o[k];w.lock=weekLockTime(w.games);for(const g of w.games){const k0=Date.parse(g.kickoff);g.onSlip=k0>=w.lock;g.lockAt=g.onSlip?w.lock:k0}}
     S.weeks=o;if(!gotWeeks||S.week==null||!S.weeks["w"+S.week])S.week=pickDefaultWeek();gotWeeks=true;
     if(data.updated)$("updnote").textContent="Results last updated "+new Date(data.updated).toLocaleString([], {weekday:"short",hour:"numeric",minute:"2-digit"});
     render();
   }catch(e){if(!gotWeeks)$("loading").textContent="Couldn't load this week's games. Reload the page."}
 }
-function loadTeams(){fetch("teams.json?v="+Date.now(),{cache:"no-store"}).then(r=>r.json()).then(t=>{S.teams=t;if(t.through)$("statsnote").textContent="Team stats from "+(t.source||"ESPN")+", through "+t.through+".";render()}).catch(()=>{})}
+function loadTeams(){fetch("teams.json?v="+Date.now(),{cache:"no-store"}).then(r=>r.json()).then(t=>{S.teams=t;if(t.through)$("statsnote").textContent="Team stats from ESPN, through "+t.through+".";render()}).catch(()=>{})}
 
 (async function start(){
-  renderTicket();
+  renderSlip();renderSlipMini();renderLeaderboard();
   loadGames();loadTeams();
   setInterval(loadGames,120000);
   document.addEventListener("visibilitychange",()=>{if(!document.hidden)loadGames()});
-  setInterval(()=>{renderBoard();renderTicket()},60000);
+  setInterval(()=>{renderBoard();renderSlip();renderSlipMini()},60000);
   const cfg=window.FIREBASE_CONFIG;
   if(!window.firebase||!cfg||!cfg.apiKey||/PASTE/.test(cfg.apiKey)){notice("Voting isn't connected yet: firebase-config.js still has placeholder values.");return}
   firebase.initializeApp(cfg);

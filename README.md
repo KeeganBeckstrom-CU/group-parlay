@@ -34,8 +34,9 @@ On GitHub, go to **Actions → Update games and publish site → Run workflow**.
 ## Good to know
 
 - Results usually show up 5–10 minutes after a game ends. GitHub sometimes runs timed jobs a few minutes late.
-- Votes lock at kickoff.
-- If the majority pick ties its game, that leg counts as a push and doesn't bust the ticket.
-- A tied vote between friends keeps that game off the ticket until someone breaks the tie.
+- Votes lock **Sunday at 12:45 PM Eastern**, 15 minutes before the 1 PM games. Games that kick off earlier (Thursday night, London) lock at their own kickoff. They count toward the leaderboard but aren't on the parlay slip.
+- The site has three tabs: **Vote**, **Leaderboard** (each person's record by week and overall, plus slip history) and **Parlay Slip** (projected until the lock, then locked and graded as games finish).
+- If the majority pick ties its game, that leg counts as a push and doesn't bust the slip.
+- A tied vote between friends keeps that game off the slip until someone breaks the tie.
 - Profiles are tied to the browser they were made in.
 - ESPN's scoreboard isn't an official public API. If it ever changes, the job will log an error under **Actions**, and the site keeps working with the last saved results.
