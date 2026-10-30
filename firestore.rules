@@ -2,14 +2,42 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Each person's profile and picks: everyone reads, each person writes only their own.
-    match /votes/{uid} {
+    // A device "owns" a profile if it created it, or signed in to it with the profile's PIN.
+    function linkedTo(pid) {
+      return exists(/databases/$(database)/documents/links/$(request.auth.uid))
+        && get(/databases/$(database)/documents/links/$(request.auth.uid)).data.pid == pid;
+    }
+    function owns(pid) {
+      return request.auth != null && (request.auth.uid == pid || linkedTo(pid));
+    }
+
+    // Profiles and picks: everyone reads, only the owner's devices write.
+    match /votes/{pid} {
       allow read: if true;
-      allow create, update: if request.auth != null && request.auth.uid == uid
-        && request.resource.data.keys().hasOnly(['name', 'hooper', 'picks', 'updatedAt', 'joinedAt'])
+      allow create, update: if owns(pid)
+        && request.resource.data.keys().hasOnly(['name', 'hooper', 'picks', 'updatedAt', 'joinedAt', 'hasPin'])
         && request.resource.data.name is string && request.resource.data.name.size() <= 24
         && (!('hooper' in request.resource.data) || (request.resource.data.hooper is string && request.resource.data.hooper.size() <= 32));
-      allow delete: if false;
+      allow delete: if owns(pid);
+    }
+
+    // Each profile's PIN. Nobody can read it; only the owner can set or change it.
+    match /pins/{pid} {
+      allow read: if false;
+      allow create, update: if owns(pid)
+        && request.resource.data.keys().hasOnly(['pin'])
+        && request.resource.data.pin is string && request.resource.data.pin.matches('^[0-9]{4}$');
+      allow delete: if owns(pid);
+    }
+
+    // Signing a device in to a profile: only allowed with the right PIN.
+    match /links/{uid} {
+      allow get: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['pid', 'pin', 'at'])
+        && exists(/databases/$(database)/documents/pins/$(request.resource.data.pid))
+        && request.resource.data.pin == get(/databases/$(database)/documents/pins/$(request.resource.data.pid)).data.pin;
+      allow delete: if request.auth != null && request.auth.uid == uid;
     }
 
     // Games and scores come from games.json on the website, not the database.
