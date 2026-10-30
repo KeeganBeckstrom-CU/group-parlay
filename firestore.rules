@@ -2,31 +2,44 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // A device "owns" a profile if it created it, or picked it with "Already in the crew? Pick your name".
-    function linkedTo(pid) {
-      return exists(/databases/$(database)/documents/links/$(request.auth.uid))
+    // The only names that can have a profile.
+    function roster() {
+      return ['keegan', 'brady', 'cooper', 'ashton', 'devin', 'zach', 'ryan', 'will', 'randy', 'jake'];
+    }
+    // A device can act as a profile only after signing in to it with that profile's PIN.
+    function signedInAs(pid) {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/links/$(request.auth.uid))
         && get(/databases/$(database)/documents/links/$(request.auth.uid)).data.pid == pid;
     }
-    function owns(pid) {
-      return request.auth != null && (request.auth.uid == pid || linkedTo(pid));
-    }
 
-    // Profiles and picks: everyone reads, only the owner's devices write.
+    // Profiles and picks: everyone reads; only the signed-in person writes their own.
     match /votes/{pid} {
       allow read: if true;
-      allow create, update: if owns(pid)
-        && request.resource.data.keys().hasOnly(['name', 'hooper', 'picks', 'updatedAt', 'joinedAt', 'hasPin'])
-        && request.resource.data.name is string && request.resource.data.name.size() <= 24
-        && (!('hooper' in request.resource.data) || (request.resource.data.hooper is string && request.resource.data.hooper.size() <= 32));
-      allow delete: if owns(pid);
+      allow create, update: if pid in roster() && signedInAs(pid)
+        && request.resource.data.keys().hasOnly(['name', 'picks', 'updatedAt', 'joinedAt'])
+        && request.resource.data.name is string && request.resource.data.name.size() <= 24;
+      allow delete: if false;
     }
 
-    // Which profile each device uses. A device can point itself at any existing profile.
+    // PINs: hidden from everyone. The first person to pick a name sets its PIN; it can't be changed from the site.
+    // To reset someone's PIN, delete their document under pins in the Firebase console.
+    match /pins/{pid} {
+      allow read: if false;
+      allow create: if request.auth != null && pid in roster()
+        && request.resource.data.keys().hasOnly(['pin'])
+        && request.resource.data.pin is string && request.resource.data.pin.matches('^[0-9]{4}$');
+      allow update, delete: if false;
+    }
+
+    // Signing a device in: only with the right PIN.
     match /links/{uid} {
       allow get: if request.auth != null && request.auth.uid == uid;
       allow create, update: if request.auth != null && request.auth.uid == uid
-        && request.resource.data.keys().hasOnly(['pid', 'at'])
-        && exists(/databases/$(database)/documents/votes/$(request.resource.data.pid));
+        && request.resource.data.keys().hasOnly(['pid', 'pin', 'at'])
+        && request.resource.data.pid in roster()
+        && exists(/databases/$(database)/documents/pins/$(request.resource.data.pid))
+        && request.resource.data.pin == get(/databases/$(database)/documents/pins/$(request.resource.data.pid)).data.pin;
       allow delete: if request.auth != null && request.auth.uid == uid;
     }
 

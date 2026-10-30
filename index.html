@@ -189,6 +189,7 @@ details.scout[open] summary::after{transform:rotate(225deg) translateY(-2px)}
 .whos b{display:block;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .whos small{display:block;font-size:11px;color:#6b5f45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .whos span{min-width:0}
+.whos button.claimed small{color:#1f6b45}
 .card .swap{background:none;border:0;color:var(--navy);text-decoration:underline;font-size:14px;padding:6px;align-self:center;font-weight:600}
 .card .conflict{background:#fde9c8;border:1px solid #e8c88a;color:#5b4210;border-radius:8px;padding:10px 12px;font-size:13px;display:flex;flex-direction:column;gap:8px}
 .card .conflict button{align-self:flex-start;background:var(--navy);color:#fff;border:0;border-radius:6px;padding:7px 12px;font-family:var(--cond);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:12px}
@@ -323,19 +324,18 @@ table.lb{border-collapse:collapse;width:100%;min-width:520px;font-variant-numeri
 <div class="toast" id="toast" hidden></div>
 <div class="scrim" id="profile" hidden>
   <div class="card" role="dialog" aria-modal="true" aria-labelledby="pf-title">
-    <h2 id="pf-title">Join the crew</h2>
+    <h2 id="pf-title">Who's voting?</h2>
     <p id="pf-sub"></p>
     <form id="pf-form" novalidate>
-      <div id="pf-newfields" style="display:flex;flex-direction:column;gap:12px">
-        <label for="pf-name">Your name<input id="pf-name" maxlength="24" autocomplete="given-name" placeholder="e.g. Keegan"></label>
-        <div class="conflict" id="pf-conflict" hidden></div>
-        <label for="pf-hooper">Favorite white hooper<input id="pf-hooper" maxlength="32" placeholder="e.g. Larry Bird"></label>
+      <div id="pf-whowrap"><div class="whos" id="pf-who" role="list"></div></div>
+      <div id="pf-pinwrap" hidden style="display:flex;flex-direction:column;gap:12px">
+        <label for="pf-pin"><span id="pf-pinlabel">4-digit PIN</span><input id="pf-pin" class="pinin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="····"></label>
+        <label for="pf-pin2" id="pf-pin2wrap">Type it again<input id="pf-pin2" class="pinin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="····"></label>
       </div>
-      <div id="pf-whowrap" hidden><div class="whos" id="pf-who" role="list"></div></div>
       <div class="hint" id="pf-hint"></div>
       <div class="err" id="pf-err" aria-live="polite"></div>
-      <div class="row"><button class="btn ghost" type="button" id="pf-cancel">Cancel</button><button class="btn" type="submit" id="pf-submit">Save profile</button></div>
-      <button type="button" class="swap" id="pf-swap"></button>
+      <div class="row"><button class="btn ghost" type="button" id="pf-cancel">Just looking</button><button class="btn" type="submit" id="pf-submit" hidden>Sign in</button></div>
+      <button type="button" class="swap" id="pf-swap" hidden>Pick a different name</button>
     </form>
   </div>
 </div>
@@ -414,7 +414,7 @@ const fmtLock=t=>new Date(t).toLocaleString([], {weekday:"short",hour:"numeric",
 function fmtUntil(ms){if(ms<=0)return "now";const m=Math.round(ms/6e4),d=Math.floor(m/1440),h=Math.floor(m%1440/60),mm=m%60;return d?`${d}d ${h}h`:h?`${h}h ${mm}m`:`${mm}m`}
 const fmtDay=iso=>new Date(iso).toLocaleDateString([], {weekday:"long",month:"short",day:"numeric"});
 const fmtTime=iso=>new Date(iso).toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});
-function voterName(uid){const v=S.votes[uid];return (v&&v.name)||(S.profiles[uid]&&S.profiles[uid].name)||"Someone"}
+function voterName(uid){return rosterName(uid)}
 const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e};
 
 function tally(wk,g){
@@ -494,7 +494,7 @@ function renderBoard(){
     });
     body.append(vs);
     const vr=el("div","voters");
-    for(const s of ["away","home"])for(const uid of t[s]){const sp=el("span","voter");const dot=el("i");tvars(dot,g[s]);sp.append(dot,voterName(uid)+" ",el("small",null,g[s]));const hv=S.votes[uid]&&S.votes[uid].hooper;if(hv)sp.title=voterName(uid)+" · favorite white hooper: "+hv;vr.append(sp)}
+    for(const s of ["away","home"])for(const uid of t[s]){const sp=el("span","voter");const dot=el("i");tvars(dot,g[s]);sp.append(dot,voterName(uid)+" ",el("small",null,g[s]));vr.append(sp)}
     if(!t.total)vr.append(el("span","none",lk?"No votes were cast.":"No votes yet. Be the first."));
     body.append(vr);
     body.append(scout(g));
@@ -619,7 +619,7 @@ function renderLeaderboard(){
   rows.forEach(([uid,r],i)=>{const key=r.w+"/"+r.l;if(key!==prev){rank=i+1;prev=key}
     const tr=el("tr",rank===1&&(r.w+r.l)?"first":null);
     tr.append(el("td","rk",String(rank)));
-    const pl=el("td","pl l");const v=S.votes[uid];pl.append(el("b",null,v.name+(uid===S.uid?" (you)":"")));const sm=el("small");if(v.hooper)sm.append("Hooper: ",el("em",null,v.hooper));pl.append(sm);tr.append(pl);
+    const pl=el("td","pl l");const v=S.votes[uid];pl.append(el("b",null,rosterName(uid)+(uid===S.uid?" (you)":"")));tr.append(pl);
     tr.append(el("td","ov",fmtRec(r)),el("td","pct",r.w+r.l?(pct(r)).toFixed(3).replace(/^0/,""):"–"));
     for(const w of scored){const x=r.weeks[w.week];const c=el("td","wk"+(x?(x.w===best[w.week]&&x.w>0?" best":""):" none"),x?fmtRec(x):"–");tr.append(c)}
     tb.append(tr)});
@@ -667,100 +667,107 @@ function writeMine(body){
   });return writing;
 }
 function vote(gid,side){
-  if(!db||!S.uid){toast("Still connecting. Try again in a second.");return}
-  if(!hasProfile()){openProfile("join");return}
+  if(!db||!S.authUid){toast("Still connecting. Try again in a second.");return}
+  if(!hasProfile()){openProfile();return}
   const w=S.weeks["w"+S.week],g=w&&w.games.find(x=>x.id===gid);if(!g||locked(g))return;
   const d=myDoc();d.picks=d.picks||{};const wk=d.picks[S.week]=d.picks[S.week]||{};
   if(wk[gid]===side)delete wk[gid];else wk[gid]=side;
   d.updatedAt=new Date().toISOString();
   S.votes[S.uid]=d;render();writeMine(d);
 }
-const hasProfile=()=>{const v=S.uid&&S.votes[S.uid];return !!(v&&v.name&&v.hooper)};
+// The crew. Profiles are keyed by these ids; nobody can create others.
+const ROSTER=[["keegan","Keegan"],["brady","Brady"],["cooper","Cooper"],["ashton","Ashton"],["devin","Devin"],["zach","Zach"],["ryan","Ryan"],["will","Will"],["randy","Randy"],["jake","Jake"]];
+const ROSTER_IDS=new Set(ROSTER.map(r=>r[0]));
+const rosterName=id=>(ROSTER.find(r=>r[0]===id)||[,"Someone"])[1];
+const hasProfile=()=>!!(S.uid&&ROSTER_IDS.has(S.uid));
 const initial=n=>(n||"?").trim().charAt(0).toUpperCase()||"?";
 const norm=n=>(n||"").trim().toLowerCase().replace(/\s+/g," ");
-let pfMode="join",pfConflictOK=false,pfPreselect=null;
-function members(){return Object.entries(S.votes).filter(([,v])=>v&&v.name)}
-const pickCount=m=>m.picks?Object.values(m.picks).reduce((t,w)=>t+Object.keys(w||{}).length,0):0;
-function openProfile(mode){
-  pfMode=mode;pfConflictOK=false;
-  const v=(S.uid&&S.votes[S.uid])||{};
-  const others=members().filter(([id])=>id!==S.uid);
-  const C={
-    join:["Join the crew","Make a profile to start voting. Your crew sees your name and your hooper.","Save profile",others.length?"Already in the crew? Pick your name":""],
-    edit:["Edit your profile","Change how you show up to the crew.","Save",others.length?"On another device already? Switch to that profile":""],
-    signin:[hasProfile()?"Switch profile":"Who's voting?","Tap your name. This device will remember you.","",hasProfile()?"":"New here? Make a profile"]}[mode];
-  $("pf-title").textContent=C[0];$("pf-sub").textContent=C[1];$("pf-submit").textContent=C[2];$("pf-submit").hidden=mode==="signin";
-  $("pf-swap").textContent=C[3];$("pf-swap").hidden=!C[3];
-  $("pf-newfields").hidden=mode==="signin";$("pf-whowrap").hidden=mode!=="signin";
-  $("pf-conflict").hidden=true;$("pf-err").textContent="";
-  $("pf-name").value=mode==="join"?"":(v.name||"");$("pf-hooper").value=mode==="join"?"":(v.hooper||"");
-  $("pf-hint").textContent=mode==="signin"&&hasProfile()?"Picks from this device move onto that profile, and this device's extra profile is removed.":"";
-  if(mode==="signin"){if(!pfPreselect){try{pfPreselect=localStorage.getItem("gp-last")}catch(x){}}const box=$("pf-who");box.replaceChildren();
-    const list=others.sort((a,b)=>a[1].name.localeCompare(b[1].name));
-    const dupes={};for(const [,m] of list){const k=norm(m.name);dupes[k]=(dupes[k]||0)+1}
-    for(const [id,m] of list){const b=el("button");b.type="button";b.setAttribute("role","listitem");
-      const t=el("span");t.append(el("b",null,m.name),el("small",null,(m.hooper?m.hooper:"")+(dupes[norm(m.name)]>1?" · "+pickCount(m)+" picks":"")));
-      b.append(el("span","av",initial(m.name)),t);b.onclick=()=>useProfile(id);if(pfPreselect===id)setTimeout(()=>b.focus(),40);box.append(b)}
-    pfPreselect=null}
-  $("profile").hidden=false;if(mode!=="signin")setTimeout(()=>$("pf-name").focus(),30);
+const validPin=p=>/^[0-9]{4}$/.test(p);
+const pickCount=m=>m&&m.picks?Object.values(m.picks).reduce((t,w)=>t+Object.keys(w||{}).length,0):0;
+function members(){return ROSTER.filter(([id])=>S.votes[id]).map(([id])=>[id,S.votes[id]])}
+let pfTarget=null;
+function openProfile(){
+  pfTarget=null;
+  $("pf-title").textContent="Who's voting?";
+  $("pf-sub").textContent="Tap your name. First time? You'll make a 4-digit PIN. After that, you'll enter it to sign in on any device.";
+  $("pf-whowrap").hidden=false;$("pf-pinwrap").hidden=true;$("pf-submit").hidden=true;$("pf-swap").hidden=true;
+  $("pf-err").textContent="";$("pf-hint").textContent="";
+  const box=$("pf-who");box.replaceChildren();
+  for(const [id,name] of ROSTER){const claimed=!!S.votes[id];
+    const b=el("button",claimed?"claimed":null);b.type="button";b.setAttribute("role","listitem");
+    const t=el("span");t.append(el("b",null,name+(id===S.uid?" (you)":"")),el("small",null,claimed?"Enter PIN":"Set up PIN"));
+    b.append(el("span","av",initial(name)),t);b.onclick=()=>choose(id);box.append(b)}
+  $("profile").hidden=false;
+}
+function choose(id){
+  pfTarget=id;const claimed=!!S.votes[id];
+  $("pf-title").textContent=claimed?"Hey "+rosterName(id):"Welcome, "+rosterName(id);
+  $("pf-sub").textContent=claimed?"Enter your 4-digit PIN.":"Make a 4-digit PIN. You'll use it to sign in on your phone, computer or any other device.";
+  $("pf-whowrap").hidden=true;$("pf-pinwrap").hidden=false;$("pf-pin2wrap").hidden=claimed;
+  $("pf-pinlabel").textContent=claimed?"PIN":"New PIN";
+  $("pf-submit").hidden=false;$("pf-submit").textContent=claimed?"Sign in":"Create PIN";
+  $("pf-swap").hidden=false;$("pf-err").textContent="";$("pf-pin").value="";$("pf-pin2").value="";
+  $("pf-hint").textContent=claimed?"Forgot it? Ask Keegan to reset it.":"Don't share it. Anyone with your PIN can vote as you.";
+  setTimeout(()=>$("pf-pin").focus(),30);
 }
 function closeProfile(){$("profile").hidden=true}
 $("pf-cancel").onclick=closeProfile;
-$("pf-swap").onclick=()=>openProfile(pfMode==="signin"?"join":"signin");
+$("pf-swap").onclick=()=>openProfile();
 $("profile").addEventListener("click",e=>{if(e.target.id==="profile")closeProfile()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("profile").hidden)closeProfile()});
-$("pf-name").addEventListener("input",()=>{pfConflictOK=false;$("pf-conflict").hidden=true});
+for(const id of ["pf-pin","pf-pin2"])$(id).addEventListener("input",e=>{e.target.value=e.target.value.replace(/\D/g,"").slice(0,4)});
 const err=m=>{$("pf-err").textContent=m};
 $("pf-form").onsubmit=async e=>{e.preventDefault();err("");
-  if(!db||!S.uid){err("Still connecting. Try again in a second.");return}
-  const n=$("pf-name").value.trim().slice(0,24),h=$("pf-hooper").value.trim().slice(0,32);
-  if(!n){err("Add your name so the crew knows who's voting.");$("pf-name").focus();return}
-  if(!h){err("Everybody has a favorite white hooper. Pick one.");$("pf-hooper").focus();return}
-  const twin=members().find(([id,m])=>id!==S.uid&&norm(m.name)===norm(n));
-  if(twin&&!pfConflictOK){const c=$("pf-conflict");c.replaceChildren();
-    c.append(el("span",null,`There's already a ${twin[1].name} in the crew (hooper: ${twin[1].hooper||"none"}). Is that you?`));
-    const b=el("button",null,"Yes, that's me");b.type="button";b.onclick=()=>useProfile(twin[0]);c.append(b);
-    c.append(el("span",null,"Different person? Tap Save again."));c.hidden=false;pfConflictOK=true;return}
-  const d=myDoc();const isNew=!hasProfile();d.name=n;d.hooper=h;d.picks=d.picks||{};if(!d.joinedAt)d.joinedAt=new Date().toISOString();
-  S.votes[S.uid]=d;closeProfile();render();
-  await writeMine(d);toast(isNew?"Welcome to the crew, "+n:"Profile saved");
+  if(!pfTarget)return;
+  if(!db||!S.authUid){err("Still connecting. Try again in a second.");return}
+  const pin=$("pf-pin").value,id=pfTarget;
+  if(!validPin(pin)){err("Enter 4 digits.");$("pf-pin").focus();return}
+  const btn=$("pf-submit");btn.disabled=true;
+  try{
+    if(!S.votes[id]){ // first time: create the PIN
+      if($("pf-pin2").value!==pin){err("Those PINs don't match.");$("pf-pin2").focus();return}
+      try{await db.doc("pins/"+id).set({pin})}
+      catch(x){ // someone already set it (or a half-finished setup): fall back to entering it
+        if(x&&x.code==="permission-denied"){}else throw x}
+    }
+    try{await db.doc("links/"+S.authUid).set({pid:id,pin,at:new Date().toISOString()})}
+    catch(x){if(x&&x.code==="permission-denied"){err(S.votes[id]?"That PIN doesn't match. Try again.":"That name already has a PIN. Enter it, or ask Keegan to reset it.");$("pf-pin").select();
+      if(!S.votes[id]){$("pf-pin2wrap").hidden=true;$("pf-submit").textContent="Sign in"}return}throw x}
+    S.uid=id;
+    if(!S.votes[id])await claimProfile(id);
+    closeProfile();render();toast("You're in, "+rosterName(id));
+  }catch(x){err("Couldn't sign in. Check your connection and try again.")}
+  finally{btn.disabled=false}
 };
-async function useProfile(target){
-  try{await db.doc("links/"+S.authUid).set({pid:target,at:new Date().toISOString()})}
-  catch(x){err("Couldn't switch profiles. Check your connection and try again.");return}
-  const old=S.uid,oldDoc=S.votes[old];S.uid=target;
-  // Move this device's picks onto the profile, then remove the extra profile.
-  if(old!==target&&oldDoc){
-    const t=JSON.parse(JSON.stringify(S.votes[target]||{}));t.picks=t.picks||{};let moved=0;
-    for(const [wk,ps] of Object.entries(oldDoc.picks||{})){t.picks[wk]=t.picks[wk]||{};for(const [gid,side] of Object.entries(ps||{}))if(!t.picks[wk][gid]){t.picks[wk][gid]=side;moved++}}
-    if(moved){t.updatedAt=new Date().toISOString();S.votes[target]=t;await writeMine(t)}
-    try{await db.doc("votes/"+old).delete()}catch(x){}
-  }
-  try{localStorage.setItem("gp-last",target)}catch(x){}
-  closeProfile();render();toast("You're in as "+(S.votes[target]?S.votes[target].name:"your profile"));
+// First sign-in for a name: bring over picks from that person's old profile(s).
+async function claimProfile(id){
+  const d={name:rosterName(id),picks:{},joinedAt:new Date().toISOString()};
+  const olds=Object.entries(S.legacy||{}).filter(([oid,v])=>oid===S.authUid||norm(v.name).split(" ")[0]===id).sort(([a],[b])=>(b===S.authUid)-(a===S.authUid));
+  for(const [,v] of olds)for(const [wk,ps] of Object.entries(v.picks||{})){d.picks[wk]=d.picks[wk]||{};for(const [gid,side] of Object.entries(ps||{}))if(!d.picks[wk][gid])d.picks[wk][gid]=side}
+  if(pickCount(d))d.updatedAt=new Date().toISOString();
+  S.votes[id]=d;await writeMine(d);
 }
 function renderMe(){
   const box=$("mebox");box.replaceChildren();
-  if(!S.uid)return;
-  if(!hasProfile()){const b=el("button","btn","Join the crew");b.type="button";b.onclick=()=>openProfile("join");box.append(b);return}
-  const v=S.votes[S.uid];const chip=el("div","mechip");
-  const who=el("span","who");who.append(el("b",null,v.name));const sm=el("small",null,"Favorite white hooper: ");sm.append(el("em",null,v.hooper));who.append(sm);
-  const b=el("button",null,"Edit");b.type="button";b.onclick=()=>openProfile("edit");
-  chip.append(el("span","av",initial(v.name)),who,b);box.append(chip);
+  if(!S.authUid)return;
+  if(!hasProfile()){const b=el("button","btn","Sign in");b.type="button";b.onclick=()=>openProfile();box.append(b);return}
+  const name=rosterName(S.uid);const chip=el("div","mechip");
+  const who=el("span","who");who.append(el("b",null,name));const w=S.votes[S.uid];const n=w&&w.picks&&w.picks[S.week]?Object.keys(w.picks[S.week]).length:0;
+  who.append(el("small",null,n+" pick"+(n===1?"":"s")+" this week"));
+  const b=el("button",null,"Switch");b.type="button";b.onclick=()=>openProfile();
+  chip.append(el("span","av",initial(name)),who,b);box.append(chip);
 }
 function renderCrew(){
   const c=$("crew");c.replaceChildren();
-  const members=Object.entries(S.votes).filter(([,v])=>v&&v.name).sort((a,b)=>(a[1].joinedAt||"").localeCompare(b[1].joinedAt||""));
-  const h=el("h3",null,"The Crew");h.append(el("small",null,members.length+" member"+(members.length===1?"":"s")));c.append(h);
-  if(!members.length){c.append(el("div","none","Nobody's joined yet. Share the board and have everyone set up a profile."));return}
+  const joined=ROSTER.filter(([id])=>S.votes[id]).length;
+  const h=el("h3",null,"The Crew");h.append(el("small",null,joined+" of "+ROSTER.length+" signed up"));c.append(h);
   const w=S.weeks["w"+S.week];const total=w&&w.games?w.games.length:0;
   const ul=el("ul");
-  for(const [uid,v] of members){
-    const li=el("li");const av=el("span","av",initial(v.name));
-    const who=el("span","who");who.append(el("b",null,v.name+(uid===S.uid?" (you)":"")));
-    const sm=el("small");if(v.hooper){sm.append("Hooper: ",el("em",null,v.hooper))}else sm.textContent="No hooper picked yet";who.append(sm);
-    const n=v.picks&&v.picks[S.week]?Object.keys(v.picks[S.week]).length:0;
-    const ct=el("span","ct",n+(total?"/"+total:""));ct.append(el("i",null,"Picks"));
+  for(const [id,name] of ROSTER){const v=S.votes[id];
+    const li=el("li");const av=el("span","av",initial(name));if(!v)av.style.background="rgba(255,255,255,.15)";
+    const who=el("span","who");who.append(el("b",null,name+(id===S.uid?" (you)":"")),el("small",null,v?"Signed up":"Hasn't signed in yet"));
+    const n=v&&v.picks&&v.picks[S.week]?Object.keys(v.picks[S.week]).length:0;
+    const ct=el("span","ct",v?n+(total?"/"+total:""):"–");ct.append(el("i",null,"Picks"));
     li.append(av,who,ct);ul.append(li);
   }
   c.append(ul);
@@ -801,11 +808,11 @@ function loadTeams(){fetch("teams.json?v="+Date.now(),{cache:"no-store"}).then(r
   firebase.initializeApp(cfg);
   db=firebase.firestore();
   try{await firebase.auth().signInAnonymously()}catch(e){notice("Couldn't connect to voting. Check your connection and reload.");return}
-  S.authUid=firebase.auth().currentUser.uid;S.uid=S.authUid;
-  try{const l=await db.doc("links/"+S.authUid).get();if(l.exists&&l.data().pid)S.uid=l.data().pid}catch(e){}
+  S.authUid=firebase.auth().currentUser.uid;S.uid=null;
+  try{const l=await db.doc("links/"+S.authUid).get();if(l.exists&&ROSTER_IDS.has(l.data().pid))S.uid=l.data().pid}catch(e){}
   let askedProfile=false;
-  db.collection("votes").onSnapshot(snap=>{const o={};snap.docs.forEach(d=>{o[d.id]=d.data()});S.votes=o;render();
-    if(!askedProfile&&S.uid&&!snap.metadata.fromCache){askedProfile=true;if(!hasProfile())openProfile(members().length?"signin":"join")}},()=>notice("Lost connection to voting. Reload the page."));
+  db.collection("votes").onSnapshot(snap=>{const o={},old={};snap.docs.forEach(d=>{(ROSTER_IDS.has(d.id)?o:old)[d.id]=d.data()});S.votes=o;S.legacy=old;render();
+    if(!askedProfile&&!snap.metadata.fromCache){askedProfile=true;if(!hasProfile())openProfile()}},()=>notice("Lost connection to voting. Reload the page."));
 })();
 </script>
 </body>

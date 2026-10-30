@@ -1,6 +1,6 @@
 # Group Parlay
 
-Friends make a profile (name + favorite white hooper) and vote on every NFL game. The majority side of each game becomes a leg of the week's group parlay.
+The crew (Keegan, Brady, Cooper, Ashton, Devin, Zach, Ryan, Will, Randy and Jake) signs in and votes on every NFL game. The majority side of each game becomes a leg of the week's group parlay.
 
 **Games and results update by themselves.** A GitHub job wakes every 5 minutes but only contacts ESPN's public scoreboard when there's something to do:
 - **After games:** once a game is 3 hours past kickoff, it checks every 5 minutes until the final score is in, then marks the winner.
