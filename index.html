@@ -293,7 +293,7 @@ table.lb{border-collapse:collapse;width:100%;min-width:520px;font-variant-numeri
   <nav class="views" role="tablist" aria-label="Views">
     <button type="button" role="tab" id="tab-vote" data-view="vote">Vote</button>
     <button type="button" role="tab" id="tab-leaderboard" data-view="leaderboard">Leaderboard</button>
-    <button type="button" role="tab" id="tab-slip" data-view="slip">Parlay Slip <span class="badge" id="slipbadge" hidden></span></button>
+    <button type="button" role="tab" id="tab-slip" data-view="slip">Parlay Slip</button>
   </nav>
   <div class="weeks" id="weeks" role="group" aria-label="Week"></div>
   <div class="notice" id="notice" hidden></div>
@@ -581,7 +581,6 @@ function renderSlipMini(){
   else p.textContent="The slip builds from the majority pick on each game.";
   m.append(p);
   const b=el("button","btn","View slip");b.type="button";b.onclick=()=>go("slip");m.append(b);
-  const badge=$("slipbadge");if(sl&&sl.legs.length){badge.hidden=false;badge.textContent=sl.legs.length;badge.className="badge"+(sl.isLocked?" lock":"")}else badge.hidden=true;
 }
 
 function recordsByUser(){
