@@ -2,6 +2,179 @@
  "season": 2026,
  "weeks": [
   {
+   "week": 7,
+   "games": [
+    {
+     "id": "w7-ne-chi",
+     "away": "NE",
+     "home": "CHI",
+     "kickoff": "2026-10-23T00:15:00.000Z",
+     "status": "final",
+     "score": {
+      "away": 24,
+      "home": 30
+     },
+     "winner": "home"
+    },
+    {
+     "id": "w7-pit-no",
+     "away": "PIT",
+     "home": "NO",
+     "kickoff": "2026-10-25T13:30:00.000Z",
+     "status": "final",
+     "score": {
+      "away": 16,
+      "home": 10
+     },
+     "winner": "away"
+    },
+    {
+     "id": "w7-cin-bal",
+     "away": "CIN",
+     "home": "BAL",
+     "kickoff": "2026-10-25T17:00:00.000Z",
+     "status": "final",
+     "score": {
+      "away": 35,
+      "home": 13
+     },
+     "winner": "away"
+    },
+    {
+     "id": "w7-cle-ten",
+     "away": "CLE",
+     "home": "TEN",
+     "kickoff": "2026-10-25T17:00:00.000Z",
+     "status": "final",
+     "score": {
+      "away": 27,
+      "home": 24
+     },
+     "winner": "away"
+    },
+    {
+     "id": "w7-ind-min",
+     "away": "IND",
+     "home": "MIN",
+     "kickoff": "2026-10-25T17:00:00.000Z",
+     "status": "final",
+     "score": {
+      "away": 10,
+      "home": 16
+     },
+     "winner": "home"
+    },
+    {
+     "id": "w7-mia-nyj",
+     "away": "MIA",
+     "home": "NYJ",
+     "kickoff": "2026-10-25T17:00:00.000Z",
+     "status": "final",
+     "score": {
+      "away": 28,
+      "home": 25
+     },
+     "winner": "away"
+    },
+    {
+     "id": "w7-nyg-hou",
+     "away": "NYG",
+     "home": "HOU",
+     "kickoff": "2026-10-25T17:00:00.000Z",
+     "status": "final",
+     "score": {
+      "away": 27,
+      "home": 21
+     },
+     "winner": "away"
+    },
+    {
+     "id": "w7-sf-atl",
+     "away": "SF",
+     "home": "ATL",
+     "kickoff": "2026-10-25T17:00:00.000Z",
+     "status": "final",
+     "score": {
+      "away": 20,
+      "home": 29
+     },
+     "winner": "home"
+    },
+    {
+     "id": "w7-tb-car",
+     "away": "TB",
+     "home": "CAR",
+     "kickoff": "2026-10-25T17:00:00.000Z",
+     "status": "final",
+     "score": {
+      "away": 43,
+      "home": 13
+     },
+     "winner": "away"
+    },
+    {
+     "id": "w7-den-ari",
+     "away": "DEN",
+     "home": "ARI",
+     "kickoff": "2026-10-25T20:05:00.000Z",
+     "status": "final",
+     "score": {
+      "away": 30,
+      "home": 16
+     },
+     "winner": "away"
+    },
+    {
+     "id": "w7-gb-det",
+     "away": "GB",
+     "home": "DET",
+     "kickoff": "2026-10-25T20:25:00.000Z",
+     "status": "final",
+     "score": {
+      "away": 17,
+      "home": 20
+     },
+     "winner": "home"
+    },
+    {
+     "id": "w7-lar-lv",
+     "away": "LAR",
+     "home": "LV",
+     "kickoff": "2026-10-25T20:25:00.000Z",
+     "status": "final",
+     "score": {
+      "away": 35,
+      "home": 21
+     },
+     "winner": "away"
+    },
+    {
+     "id": "w7-kc-sea",
+     "away": "KC",
+     "home": "SEA",
+     "kickoff": "2026-10-26T00:20:00.000Z",
+     "status": "final",
+     "score": {
+      "away": 3,
+      "home": 20
+     },
+     "winner": "home"
+    },
+    {
+     "id": "w7-dal-phi",
+     "away": "DAL",
+     "home": "PHI",
+     "kickoff": "2026-10-27T00:15:00.000Z",
+     "status": "final",
+     "score": {
+      "away": 38,
+      "home": 21
+     },
+     "winner": "away"
+    }
+   ]
+  },
+  {
    "week": 8,
    "games": [
     {
@@ -220,5 +393,6 @@
    ]
   }
  ],
- "updated": "2026-10-30T18:10:00.000Z"
+ "updated": "2026-10-30T18:30:28.945Z",
+ "scheduleChecked": "2026-10-30T18:30:28.945Z"
 }
