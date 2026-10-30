@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Each person's profile and picks: everyone reads, each person writes only their own.
+    match /votes/{uid} {
+      allow read: if true;
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['name', 'hooper', 'picks', 'updatedAt', 'joinedAt'])
+        && request.resource.data.name is string && request.resource.data.name.size() <= 24
+        && (!('hooper' in request.resource.data) || (request.resource.data.hooper is string && request.resource.data.hooper.size() <= 32));
+      allow delete: if false;
+    }
+
+    // Games and scores come from games.json on the website, not the database.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
