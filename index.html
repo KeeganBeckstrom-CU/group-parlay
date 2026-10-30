@@ -684,6 +684,7 @@ const initial=n=>(n||"?").trim().charAt(0).toUpperCase()||"?";
 const norm=n=>(n||"").trim().toLowerCase().replace(/\s+/g," ");
 const validPin=p=>/^[0-9]{4}$/.test(p);
 const pickCount=m=>m&&m.picks?Object.values(m.picks).reduce((t,w)=>t+Object.keys(w||{}).length,0):0;
+const claimed=id=>!!(S.votes[id]&&!S.votes[id]._legacy);
 function members(){return ROSTER.filter(([id])=>S.votes[id]).map(([id])=>[id,S.votes[id]])}
 let pfTarget=null;
 function openProfile(){
@@ -693,21 +694,21 @@ function openProfile(){
   $("pf-whowrap").hidden=false;$("pf-pinwrap").hidden=true;$("pf-submit").hidden=true;$("pf-swap").hidden=true;
   $("pf-err").textContent="";$("pf-hint").textContent="";
   const box=$("pf-who");box.replaceChildren();
-  for(const [id,name] of ROSTER){const claimed=!!S.votes[id];
-    const b=el("button",claimed?"claimed":null);b.type="button";b.setAttribute("role","listitem");
-    const t=el("span");t.append(el("b",null,name+(id===S.uid?" (you)":"")),el("small",null,claimed?"Enter PIN":"Set up PIN"));
+  for(const [id,name] of ROSTER){const isClaimed=claimed(id);
+    const b=el("button",isClaimed?"claimed":null);b.type="button";b.setAttribute("role","listitem");
+    const t=el("span");t.append(el("b",null,name+(id===S.uid?" (you)":"")),el("small",null,isClaimed?"Enter PIN":"Set up PIN"));
     b.append(el("span","av",initial(name)),t);b.onclick=()=>choose(id);box.append(b)}
   $("profile").hidden=false;
 }
 function choose(id){
-  pfTarget=id;const claimed=!!S.votes[id];
-  $("pf-title").textContent=claimed?"Hey "+rosterName(id):"Welcome, "+rosterName(id);
-  $("pf-sub").textContent=claimed?"Enter your 4-digit PIN.":"Make a 4-digit PIN. You'll use it to sign in on your phone, computer or any other device.";
-  $("pf-whowrap").hidden=true;$("pf-pinwrap").hidden=false;$("pf-pin2wrap").hidden=claimed;
-  $("pf-pinlabel").textContent=claimed?"PIN":"New PIN";
-  $("pf-submit").hidden=false;$("pf-submit").textContent=claimed?"Sign in":"Create PIN";
+  pfTarget=id;const isClaimed=claimed(id);
+  $("pf-title").textContent=isClaimed?"Hey "+rosterName(id):"Welcome, "+rosterName(id);
+  $("pf-sub").textContent=isClaimed?"Enter your 4-digit PIN.":"Make a 4-digit PIN. You'll use it to sign in on your phone, computer or any other device."+(S.votes[id]&&pickCount(S.votes[id])?" Your earlier picks come with you.":"");
+  $("pf-whowrap").hidden=true;$("pf-pinwrap").hidden=false;$("pf-pin2wrap").hidden=isClaimed;
+  $("pf-pinlabel").textContent=isClaimed?"PIN":"New PIN";
+  $("pf-submit").hidden=false;$("pf-submit").textContent=isClaimed?"Sign in":"Create PIN";
   $("pf-swap").hidden=false;$("pf-err").textContent="";$("pf-pin").value="";$("pf-pin2").value="";
-  $("pf-hint").textContent=claimed?"Forgot it? Ask Keegan to reset it.":"Don't share it. Anyone with your PIN can vote as you.";
+  $("pf-hint").textContent=isClaimed?"Forgot it? Ask Keegan to reset it.":"Don't share it. Anyone with your PIN can vote as you.";
   setTimeout(()=>$("pf-pin").focus(),30);
 }
 function closeProfile(){$("profile").hidden=true}
@@ -724,24 +725,24 @@ $("pf-form").onsubmit=async e=>{e.preventDefault();err("");
   if(!validPin(pin)){err("Enter 4 digits.");$("pf-pin").focus();return}
   const btn=$("pf-submit");btn.disabled=true;
   try{
-    if(!S.votes[id]){ // first time: create the PIN
+    if(!claimed(id)){ // first time: create the PIN
       if($("pf-pin2").value!==pin){err("Those PINs don't match.");$("pf-pin2").focus();return}
       try{await db.doc("pins/"+id).set({pin})}
       catch(x){ // someone already set it (or a half-finished setup): fall back to entering it
         if(x&&x.code==="permission-denied"){}else throw x}
     }
     try{await db.doc("links/"+S.authUid).set({pid:id,pin,at:new Date().toISOString()})}
-    catch(x){if(x&&x.code==="permission-denied"){err(S.votes[id]?"That PIN doesn't match. Try again.":"That name already has a PIN. Enter it, or ask Keegan to reset it.");$("pf-pin").select();
-      if(!S.votes[id]){$("pf-pin2wrap").hidden=true;$("pf-submit").textContent="Sign in"}return}throw x}
+    catch(x){if(x&&x.code==="permission-denied"){err(claimed(id)?"That PIN doesn't match. Try again.":"That name already has a PIN. Enter it, or ask Keegan to reset it.");$("pf-pin").select();
+      if(!claimed(id)){$("pf-pin2wrap").hidden=true;$("pf-submit").textContent="Sign in"}return}throw x}
     S.uid=id;
-    if(!S.votes[id])await claimProfile(id);
+    if(!claimed(id))await claimProfile(id);
     closeProfile();render();toast("You're in, "+rosterName(id));
   }catch(x){err("Couldn't sign in. Check your connection and try again.")}
   finally{btn.disabled=false}
 };
 // First sign-in for a name: bring over picks from that person's old profile(s).
 async function claimProfile(id){
-  const d={name:rosterName(id),picks:{},joinedAt:new Date().toISOString()};
+  const d={name:rosterName(id),picks:{},joinedAt:new Date().toISOString()};delete S.votes[id];
   const olds=Object.entries(S.legacy||{}).filter(([oid,v])=>oid===S.authUid||norm(v.name).split(" ")[0]===id).sort(([a],[b])=>(b===S.authUid)-(a===S.authUid));
   for(const [,v] of olds)for(const [wk,ps] of Object.entries(v.picks||{})){d.picks[wk]=d.picks[wk]||{};for(const [gid,side] of Object.entries(ps||{}))if(!d.picks[wk][gid])d.picks[wk][gid]=side}
   if(pickCount(d))d.updatedAt=new Date().toISOString();
@@ -759,13 +760,13 @@ function renderMe(){
 }
 function renderCrew(){
   const c=$("crew");c.replaceChildren();
-  const joined=ROSTER.filter(([id])=>S.votes[id]).length;
+  const joined=ROSTER.filter(([id])=>claimed(id)).length;
   const h=el("h3",null,"The Crew");h.append(el("small",null,joined+" of "+ROSTER.length+" signed up"));c.append(h);
   const w=S.weeks["w"+S.week];const total=w&&w.games?w.games.length:0;
   const ul=el("ul");
   for(const [id,name] of ROSTER){const v=S.votes[id];
-    const li=el("li");const av=el("span","av",initial(name));if(!v)av.style.background="rgba(255,255,255,.15)";
-    const who=el("span","who");who.append(el("b",null,name+(id===S.uid?" (you)":"")),el("small",null,v?"Signed up":"Hasn't signed in yet"));
+    const li=el("li");const av=el("span","av",initial(name));if(!claimed(id))av.style.background="rgba(255,255,255,.15)";
+    const who=el("span","who");who.append(el("b",null,name+(id===S.uid?" (you)":"")),el("small",null,claimed(id)?"Signed up":v?"Needs to set a PIN":"Hasn't signed in yet"));
     const n=v&&v.picks&&v.picks[S.week]?Object.keys(v.picks[S.week]).length:0;
     const ct=el("span","ct",v?n+(total?"/"+total:""):"–");ct.append(el("i",null,"Picks"));
     li.append(av,who,ct);ul.append(li);
@@ -811,7 +812,12 @@ function loadTeams(){fetch("teams.json?v="+Date.now(),{cache:"no-store"}).then(r
   S.authUid=firebase.auth().currentUser.uid;S.uid=null;
   try{const l=await db.doc("links/"+S.authUid).get();if(l.exists&&ROSTER_IDS.has(l.data().pid))S.uid=l.data().pid}catch(e){}
   let askedProfile=false;
-  db.collection("votes").onSnapshot(snap=>{const o={},old={};snap.docs.forEach(d=>{(ROSTER_IDS.has(d.id)?o:old)[d.id]=d.data()});S.votes=o;S.legacy=old;render();
+  db.collection("votes").onSnapshot(snap=>{const o={},old={};snap.docs.forEach(d=>{(ROSTER_IDS.has(d.id)?o:old)[d.id]=d.data()});
+    // Old picks (from before the roster) show under each person's name until they set a PIN, which saves them for good.
+    for(const v of Object.values(old)){const id=norm(v&&v.name).split(" ")[0];if(!ROSTER_IDS.has(id)||(o[id]&&!o[id]._legacy))continue;
+      const d=o[id]||(o[id]={name:rosterName(id),picks:{},_legacy:true});
+      for(const [wk,ps] of Object.entries(v.picks||{})){d.picks[wk]=d.picks[wk]||{};for(const [gid,side] of Object.entries(ps||{}))if(!d.picks[wk][gid])d.picks[wk][gid]=side}}
+    S.votes=o;S.legacy=old;render();
     if(!askedProfile&&!snap.metadata.fromCache){askedProfile=true;if(!hasProfile())openProfile()}},()=>notice("Lost connection to voting. Reload the page."));
 })();
 </script>
