@@ -25,18 +25,27 @@ const ABBR = { WSH: "WAS" };
 const KNOWN = new Set(["ARI","ATL","BAL","BUF","CAR","CHI","CIN","CLE","DAL","DEN","DET","GB","HOU","IND","JAX","KC","LV","LAC","LAR","MIA","MIN","NE","NO","NYG","NYJ","PHI","PIT","SF","SEA","TB","TEN","WAS"]);
 const ab = (a) => ABBR[a] || a;
 
+const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36";
+const HEADERS = { "user-agent": UA, accept: "application/json,text/plain,*/*", "accept-language": "en-US,en;q=0.9", referer: "https://www.espn.com/" };
+// ESPN serves the same data from a couple of hosts; try the next one if a host refuses.
+const HOSTS = ["https://site.api.espn.com", "https://site.web.api.espn.com"];
 async function getJSON(url, fixtureName) {
   if (FIXTURES) return JSON.parse(await readFile(`${FIXTURES}/${fixtureName}`, "utf8"));
-  for (let attempt = 1; attempt <= 3; attempt++) {
-    try {
-      const r = await fetch(url, { headers: { "user-agent": "group-parlay-bot" } });
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      return await r.json();
-    } catch (e) {
-      if (attempt === 3) throw new Error(`${url}: ${e.message}`);
-      await new Promise((res) => setTimeout(res, 2000 * attempt));
+  const errs = [];
+  for (const host of HOSTS) {
+    const u = url.replace("https://site.api.espn.com", host);
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        const r = await fetch(u, { headers: HEADERS });
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return await r.json();
+      } catch (e) {
+        errs.push(`${new URL(u).host} ${e.message}`);
+        await new Promise((res) => setTimeout(res, 1500 * attempt));
+      }
     }
   }
+  throw new Error(`${url.replace(/^https:\/\/[^/]+/, "")}: ${errs.join("; ")}`);
 }
 const readJSON = async (u, fallback) => { try { return JSON.parse(await readFile(u, "utf8")); } catch { return fallback; } };
 
@@ -82,7 +91,7 @@ async function fetchWeek(type, n, year) {
 const SLUG = { WAS: "wsh" };
 function flat(sg) { const o = {}; const walk = (a) => { for (const s of a) { if (s.stats && !("value" in s)) walk(s.stats); else if (s.name) o[s.name] = s.value; } }; walk(sg.stats || []); return o; }
 async function teamLeaders(abbr) {
-  const r = await fetch(`https://www.espn.com/nfl/team/stats/_/name/${SLUG[abbr] || abbr.toLowerCase()}`, { headers: { "user-agent": "Mozilla/5.0 group-parlay-bot" } });
+  const r = await fetch(`https://www.espn.com/nfl/team/stats/_/name/${SLUG[abbr] || abbr.toLowerCase()}`, { headers: HEADERS });
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
   const h = await r.text();
   const i = h.indexOf("window['__espnfitt__']=");
