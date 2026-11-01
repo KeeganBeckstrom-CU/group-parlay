@@ -194,7 +194,12 @@
      "away": "ARI",
      "home": "DAL",
      "kickoff": "2026-11-01T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 33,
+      "home": 30
+     },
+     "winner": "away"
     },
     {
      "id": "w8-atl-tb",
@@ -213,7 +218,12 @@
      "away": "BAL",
      "home": "BUF",
      "kickoff": "2026-11-01T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 10,
+      "home": 36
+     },
+     "winner": "home"
     },
     {
      "id": "w8-cle-pit",
@@ -268,7 +278,12 @@
      "away": "TEN",
      "home": "CIN",
      "kickoff": "2026-11-01T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 36,
+      "home": 43
+     },
+     "winner": "home"
     },
     {
      "id": "w8-lac-lar",
@@ -418,6 +433,6 @@
    ]
   }
  ],
- "updated": "2026-11-01T21:10:19.768Z",
+ "updated": "2026-11-01T21:45:00.273Z",
  "scheduleChecked": "2026-11-01T11:03:46.891Z"
 }
