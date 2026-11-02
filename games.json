@@ -290,21 +290,36 @@
      "away": "LAC",
      "home": "LAR",
      "kickoff": "2026-11-01T21:05:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 9,
+      "home": 24
+     },
+     "winner": "home"
     },
     {
      "id": "w8-kc-den",
      "away": "KC",
      "home": "DEN",
      "kickoff": "2026-11-01T21:25:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 24,
+      "home": 28
+     },
+     "winner": "home"
     },
     {
      "id": "w8-ne-mia",
      "away": "NE",
      "home": "MIA",
      "kickoff": "2026-11-01T21:25:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 24,
+      "home": 19
+     },
+     "winner": "away"
     },
     {
      "id": "w8-phi-was",
@@ -433,6 +448,6 @@
    ]
   }
  ],
- "updated": "2026-11-01T21:45:00.273Z",
+ "updated": "2026-11-02T01:00:31.834Z",
  "scheduleChecked": "2026-11-01T11:03:46.891Z"
 }
