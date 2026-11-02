@@ -326,7 +326,12 @@
      "away": "PHI",
      "home": "WAS",
      "kickoff": "2026-11-02T01:20:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 10,
+      "home": 27
+     },
+     "winner": "home"
     },
     {
      "id": "w8-chi-sea",
@@ -448,6 +453,6 @@
    ]
   }
  ],
- "updated": "2026-11-02T01:00:31.834Z",
+ "updated": "2026-11-02T04:42:17.465Z",
  "scheduleChecked": "2026-11-01T11:03:46.891Z"
 }
