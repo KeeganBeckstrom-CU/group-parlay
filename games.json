@@ -338,7 +338,12 @@
      "away": "CHI",
      "home": "SEA",
      "kickoff": "2026-11-03T01:15:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 34,
+      "home": 17
+     },
+     "winner": "away"
     }
    ]
   },
@@ -453,6 +458,6 @@
    ]
   }
  ],
- "updated": "2026-11-02T04:42:17.465Z",
+ "updated": "2026-11-03T04:55:18.566Z",
  "scheduleChecked": "2026-11-02T10:18:37.569Z"
 }
