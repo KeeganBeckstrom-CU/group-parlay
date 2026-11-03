@@ -163,12 +163,16 @@ if (schedDue) {
 for (const w of due) { const [t, n] = fromSite(w); targets.set(`${t}-${n}`, [t, n]); }
 note(`Checking ${[...targets.keys()].join(", ")}${schedDue ? " (daily schedule check)" : " (games that should be over)"}`);
 
-const records = {};
+// ESPN reports a team's record as of that week's game, so an older week carries an older record.
+// Only keep a record that covers at least as many games as the saved one, whatever order weeks load in.
+const gamesIn = (rec) => String(rec).split("-").reduce((sum, n) => sum + (Number(n) || 0), 0);
 for (const [t, w] of targets.values()) {
   try {
     const wk = await fetchWeek(t, w, year);
     if (!wk.games.length) continue;
-    Object.assign(records, wk.records);
+    for (const [k, rec] of Object.entries(wk.records)) {
+      if (rec && teams.teams[k] && gamesIn(rec) >= gamesIn(teams.teams[k].rec)) teams.teams[k].rec = rec;
+    }
     const i = games.weeks.findIndex((x) => x.week === wk.week);
     const entry = { week: wk.week, ...(wk.label ? { label: wk.label } : {}), games: wk.games };
     if (i >= 0) games.weeks[i] = entry; else games.weeks.push(entry);
@@ -177,8 +181,6 @@ for (const [t, w] of targets.values()) {
   }
 }
 games.weeks.sort((a, b) => a.week - b.week);
-
-for (const [k, rec] of Object.entries(records)) if (rec && teams.teams[k]) teams.teams[k].rec = rec;
 
 const daysOld = teams.updated ? (now - new Date(teams.updated)) / 864e5 : 99;
 if (!FIXTURES && (process.env.STATS === "1" || (now.getUTCDay() === 2 && daysOld > 4))) {
