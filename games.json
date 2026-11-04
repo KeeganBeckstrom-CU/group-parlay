@@ -456,8 +456,111 @@
      "status": "scheduled"
     }
    ]
+  },
+  {
+   "week": 10,
+   "games": [
+    {
+     "id": "w10-was-nyg",
+     "away": "WAS",
+     "home": "NYG",
+     "kickoff": "2026-11-13T01:15:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w10-ne-det",
+     "away": "NE",
+     "home": "DET",
+     "kickoff": "2026-11-15T14:30:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w10-buf-nyj",
+     "away": "BUF",
+     "home": "NYJ",
+     "kickoff": "2026-11-15T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w10-car-no",
+     "away": "CAR",
+     "home": "NO",
+     "kickoff": "2026-11-15T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w10-hou-cle",
+     "away": "HOU",
+     "home": "CLE",
+     "kickoff": "2026-11-15T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w10-jax-ten",
+     "away": "JAX",
+     "home": "TEN",
+     "kickoff": "2026-11-15T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w10-kc-atl",
+     "away": "KC",
+     "home": "ATL",
+     "kickoff": "2026-11-15T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w10-mia-ind",
+     "away": "MIA",
+     "home": "IND",
+     "kickoff": "2026-11-15T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w10-min-gb",
+     "away": "MIN",
+     "home": "GB",
+     "kickoff": "2026-11-15T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w10-lar-ari",
+     "away": "LAR",
+     "home": "ARI",
+     "kickoff": "2026-11-15T21:05:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w10-sea-lv",
+     "away": "SEA",
+     "home": "LV",
+     "kickoff": "2026-11-15T21:05:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w10-sf-dal",
+     "away": "SF",
+     "home": "DAL",
+     "kickoff": "2026-11-15T21:25:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w10-pit-cin",
+     "away": "PIT",
+     "home": "CIN",
+     "kickoff": "2026-11-16T01:20:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w10-lac-bal",
+     "away": "LAC",
+     "home": "BAL",
+     "kickoff": "2026-11-17T01:15:00.000Z",
+     "status": "scheduled"
+    }
+   ]
   }
  ],
- "updated": "2026-11-03T04:55:18.566Z",
- "scheduleChecked": "2026-11-03T10:39:25.270Z"
+ "updated": "2026-11-04T10:51:32.550Z",
+ "scheduleChecked": "2026-11-04T10:51:32.550Z"
 }
