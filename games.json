@@ -355,7 +355,12 @@
      "away": "JAX",
      "home": "BAL",
      "kickoff": "2026-11-06T01:15:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 33,
+      "home": 10
+     },
+     "winner": "away"
     },
     {
      "id": "w9-cin-atl",
@@ -561,6 +566,6 @@
    ]
   }
  ],
- "updated": "2026-11-04T10:51:32.550Z",
+ "updated": "2026-11-06T04:16:38.851Z",
  "scheduleChecked": "2026-11-05T10:42:33.629Z"
 }
