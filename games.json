@@ -367,7 +367,12 @@
      "away": "CIN",
      "home": "ATL",
      "kickoff": "2026-11-08T14:30:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 34,
+      "home": 17
+     },
+     "winner": "away"
     },
     {
      "id": "w9-cle-no",
@@ -566,6 +571,6 @@
    ]
   }
  ],
- "updated": "2026-11-06T04:16:38.851Z",
+ "updated": "2026-11-08T17:48:56.814Z",
  "scheduleChecked": "2026-11-08T10:18:08.899Z"
 }
