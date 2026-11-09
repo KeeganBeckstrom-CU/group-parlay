@@ -511,7 +511,12 @@
      "away": "TB",
      "home": "CHI",
      "kickoff": "2026-11-09T01:20:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 24,
+      "home": 27
+     },
+     "winner": "home"
     },
     {
      "id": "w9-buf-min",
@@ -626,6 +631,6 @@
    ]
   }
  ],
- "updated": "2026-11-09T01:22:43.312Z",
+ "updated": "2026-11-09T05:29:53.450Z",
  "scheduleChecked": "2026-11-08T10:18:08.899Z"
 }
