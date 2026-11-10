@@ -523,7 +523,12 @@
      "away": "BUF",
      "home": "MIN",
      "kickoff": "2026-11-10T01:15:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 23,
+      "home": 6
+     },
+     "winner": "away"
     }
    ]
   },
@@ -631,6 +636,6 @@
    ]
   }
  ],
- "updated": "2026-11-09T05:29:53.450Z",
+ "updated": "2026-11-10T05:22:19.338Z",
  "scheduleChecked": "2026-11-09T10:03:47.750Z"
 }
