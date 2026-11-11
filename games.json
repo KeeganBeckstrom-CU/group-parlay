@@ -634,8 +634,104 @@
      "status": "scheduled"
     }
    ]
+  },
+  {
+   "week": 11,
+   "games": [
+    {
+     "id": "w11-ind-hou",
+     "away": "IND",
+     "home": "HOU",
+     "kickoff": "2026-11-20T01:15:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w11-ari-kc",
+     "away": "ARI",
+     "home": "KC",
+     "kickoff": "2026-11-22T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w11-bal-car",
+     "away": "BAL",
+     "home": "CAR",
+     "kickoff": "2026-11-22T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w11-mia-buf",
+     "away": "MIA",
+     "home": "BUF",
+     "kickoff": "2026-11-22T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w11-no-chi",
+     "away": "NO",
+     "home": "CHI",
+     "kickoff": "2026-11-22T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w11-pit-phi",
+     "away": "PIT",
+     "home": "PHI",
+     "kickoff": "2026-11-22T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w11-tb-det",
+     "away": "TB",
+     "home": "DET",
+     "kickoff": "2026-11-22T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w11-ten-dal",
+     "away": "TEN",
+     "home": "DAL",
+     "kickoff": "2026-11-22T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w11-nyj-lac",
+     "away": "NYJ",
+     "home": "LAC",
+     "kickoff": "2026-11-22T21:05:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w11-jax-nyg",
+     "away": "JAX",
+     "home": "NYG",
+     "kickoff": "2026-11-22T21:25:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w11-lv-den",
+     "away": "LV",
+     "home": "DEN",
+     "kickoff": "2026-11-22T21:25:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w11-min-sf",
+     "away": "MIN",
+     "home": "SF",
+     "kickoff": "2026-11-23T01:20:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w11-cin-was",
+     "away": "CIN",
+     "home": "WAS",
+     "kickoff": "2026-11-24T01:15:00.000Z",
+     "status": "scheduled"
+    }
+   ]
   }
  ],
- "updated": "2026-11-10T05:22:19.338Z",
- "scheduleChecked": "2026-11-10T10:29:40.968Z"
+ "updated": "2026-11-11T10:40:54.748Z",
+ "scheduleChecked": "2026-11-11T10:40:54.748Z"
 }
