@@ -540,7 +540,12 @@
      "away": "WAS",
      "home": "NYG",
      "kickoff": "2026-11-13T01:15:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 24,
+      "home": 21
+     },
+     "winner": "away"
     },
     {
      "id": "w10-ne-det",
@@ -732,6 +737,6 @@
    ]
   }
  ],
- "updated": "2026-11-11T10:40:54.748Z",
+ "updated": "2026-11-13T05:18:56.633Z",
  "scheduleChecked": "2026-11-12T10:46:18.953Z"
 }
