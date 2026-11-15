@@ -552,7 +552,12 @@
      "away": "NE",
      "home": "DET",
      "kickoff": "2026-11-15T14:30:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 10,
+      "home": 35
+     },
+     "winner": "home"
     },
     {
      "id": "w10-buf-nyj",
@@ -737,6 +742,6 @@
    ]
   }
  ],
- "updated": "2026-11-13T05:18:56.633Z",
+ "updated": "2026-11-15T17:56:23.093Z",
  "scheduleChecked": "2026-11-15T10:06:23.584Z"
 }
