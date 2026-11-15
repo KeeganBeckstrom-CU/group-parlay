@@ -564,49 +564,84 @@
      "away": "BUF",
      "home": "NYJ",
      "kickoff": "2026-11-15T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 31,
+      "home": 12
+     },
+     "winner": "away"
     },
     {
      "id": "w10-car-no",
      "away": "CAR",
      "home": "NO",
      "kickoff": "2026-11-15T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 20,
+      "home": 17
+     },
+     "winner": "away"
     },
     {
      "id": "w10-hou-cle",
      "away": "HOU",
      "home": "CLE",
      "kickoff": "2026-11-15T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 24,
+      "home": 27
+     },
+     "winner": "home"
     },
     {
      "id": "w10-jax-ten",
      "away": "JAX",
      "home": "TEN",
      "kickoff": "2026-11-15T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 40,
+      "home": 23
+     },
+     "winner": "away"
     },
     {
      "id": "w10-kc-atl",
      "away": "KC",
      "home": "ATL",
      "kickoff": "2026-11-15T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 35,
+      "home": 13
+     },
+     "winner": "away"
     },
     {
      "id": "w10-mia-ind",
      "away": "MIA",
      "home": "IND",
      "kickoff": "2026-11-15T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 22,
+      "home": 24
+     },
+     "winner": "home"
     },
     {
      "id": "w10-min-gb",
      "away": "MIN",
      "home": "GB",
      "kickoff": "2026-11-15T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 30,
+      "home": 10
+     },
+     "winner": "away"
     },
     {
      "id": "w10-lar-ari",
@@ -742,6 +777,6 @@
    ]
   }
  ],
- "updated": "2026-11-15T17:56:23.093Z",
+ "updated": "2026-11-15T21:22:03.984Z",
  "scheduleChecked": "2026-11-15T10:06:23.584Z"
 }
