@@ -684,7 +684,12 @@
      "away": "PIT",
      "home": "CIN",
      "kickoff": "2026-11-16T01:20:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 18,
+      "home": 38
+     },
+     "winner": "home"
     },
     {
      "id": "w10-lac-bal",
@@ -792,6 +797,6 @@
    ]
   }
  ],
- "updated": "2026-11-16T01:25:09.273Z",
+ "updated": "2026-11-16T05:09:10.740Z",
  "scheduleChecked": "2026-11-15T10:06:23.584Z"
 }
