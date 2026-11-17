@@ -696,7 +696,12 @@
      "away": "LAC",
      "home": "BAL",
      "kickoff": "2026-11-17T01:15:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 23,
+      "home": 20
+     },
+     "winner": "away"
     }
    ]
   },
@@ -797,6 +802,6 @@
    ]
   }
  ],
- "updated": "2026-11-16T05:09:10.740Z",
+ "updated": "2026-11-17T04:33:22.783Z",
  "scheduleChecked": "2026-11-16T10:50:47.439Z"
 }
