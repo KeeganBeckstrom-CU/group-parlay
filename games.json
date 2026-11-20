@@ -713,7 +713,12 @@
      "away": "IND",
      "home": "HOU",
      "kickoff": "2026-11-20T01:15:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 3,
+      "home": 26
+     },
+     "winner": "home"
     },
     {
      "id": "w11-ari-kc",
@@ -919,6 +924,6 @@
    ]
   }
  ],
- "updated": "2026-11-18T11:02:02.582Z",
+ "updated": "2026-11-20T04:41:11.731Z",
  "scheduleChecked": "2026-11-19T10:29:53.817Z"
 }
