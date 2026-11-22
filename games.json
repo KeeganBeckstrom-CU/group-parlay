@@ -725,49 +725,84 @@
      "away": "ARI",
      "home": "KC",
      "kickoff": "2026-11-22T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 7,
+      "home": 34
+     },
+     "winner": "home"
     },
     {
      "id": "w11-bal-car",
      "away": "BAL",
      "home": "CAR",
      "kickoff": "2026-11-22T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 33,
+      "home": 35
+     },
+     "winner": "home"
     },
     {
      "id": "w11-mia-buf",
      "away": "MIA",
      "home": "BUF",
      "kickoff": "2026-11-22T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 9,
+      "home": 26
+     },
+     "winner": "home"
     },
     {
      "id": "w11-no-chi",
      "away": "NO",
      "home": "CHI",
      "kickoff": "2026-11-22T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 13,
+      "home": 21
+     },
+     "winner": "home"
     },
     {
      "id": "w11-pit-phi",
      "away": "PIT",
      "home": "PHI",
      "kickoff": "2026-11-22T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 16,
+      "home": 19
+     },
+     "winner": "home"
     },
     {
      "id": "w11-tb-det",
      "away": "TB",
      "home": "DET",
      "kickoff": "2026-11-22T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 21,
+      "home": 31
+     },
+     "winner": "home"
     },
     {
      "id": "w11-ten-dal",
      "away": "TEN",
      "home": "DAL",
      "kickoff": "2026-11-22T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 30,
+      "home": 51
+     },
+     "winner": "home"
     },
     {
      "id": "w11-nyj-lac",
@@ -924,6 +959,6 @@
    ]
   }
  ],
- "updated": "2026-11-20T04:41:11.731Z",
+ "updated": "2026-11-22T21:34:02.156Z",
  "scheduleChecked": "2026-11-22T10:27:11.227Z"
 }
