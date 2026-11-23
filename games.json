@@ -845,7 +845,12 @@
      "away": "MIN",
      "home": "SF",
      "kickoff": "2026-11-23T01:20:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 10,
+      "home": 35
+     },
+     "winner": "home"
     },
     {
      "id": "w11-cin-was",
@@ -974,6 +979,6 @@
    ]
   }
  ],
- "updated": "2026-11-23T01:58:05.058Z",
+ "updated": "2026-11-23T05:10:06.493Z",
  "scheduleChecked": "2026-11-22T10:27:11.227Z"
 }
