@@ -821,14 +821,24 @@
      "away": "JAX",
      "home": "NYG",
      "kickoff": "2026-11-22T21:25:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 18,
+      "home": 23
+     },
+     "winner": "home"
     },
     {
      "id": "w11-lv-den",
      "away": "LV",
      "home": "DEN",
      "kickoff": "2026-11-22T21:25:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 24,
+      "home": 38
+     },
+     "winner": "home"
     },
     {
      "id": "w11-min-sf",
@@ -964,6 +974,6 @@
    ]
   }
  ],
- "updated": "2026-11-23T00:36:42.927Z",
+ "updated": "2026-11-23T01:58:05.058Z",
  "scheduleChecked": "2026-11-22T10:27:11.227Z"
 }
