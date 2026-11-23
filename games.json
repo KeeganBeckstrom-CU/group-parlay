@@ -809,7 +809,12 @@
      "away": "NYJ",
      "home": "LAC",
      "kickoff": "2026-11-22T21:05:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 27,
+      "home": 24
+     },
+     "winner": "away"
     },
     {
      "id": "w11-jax-nyg",
@@ -959,6 +964,6 @@
    ]
   }
  ],
- "updated": "2026-11-22T21:34:02.156Z",
+ "updated": "2026-11-23T00:36:42.927Z",
  "scheduleChecked": "2026-11-22T10:27:11.227Z"
 }
