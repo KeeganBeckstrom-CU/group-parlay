@@ -857,7 +857,12 @@
      "away": "CIN",
      "home": "WAS",
      "kickoff": "2026-11-24T01:15:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 20,
+      "home": 22
+     },
+     "winner": "home"
     }
    ]
   },
@@ -979,6 +984,6 @@
    ]
   }
  ],
- "updated": "2026-11-23T05:10:06.493Z",
+ "updated": "2026-11-24T04:45:57.798Z",
  "scheduleChecked": "2026-11-23T10:34:55.882Z"
 }
