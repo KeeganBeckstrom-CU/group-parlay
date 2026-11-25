@@ -982,8 +982,111 @@
      "status": "scheduled"
     }
    ]
+  },
+  {
+   "week": 13,
+   "games": [
+    {
+     "id": "w13-kc-lar",
+     "away": "KC",
+     "home": "LAR",
+     "kickoff": "2026-12-04T01:15:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w13-cin-cle",
+     "away": "CIN",
+     "home": "CLE",
+     "kickoff": "2026-12-06T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w13-det-atl",
+     "away": "DET",
+     "home": "ATL",
+     "kickoff": "2026-12-06T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w13-gb-no",
+     "away": "GB",
+     "home": "NO",
+     "kickoff": "2026-12-06T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w13-jax-chi",
+     "away": "JAX",
+     "home": "CHI",
+     "kickoff": "2026-12-06T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w13-lac-tb",
+     "away": "LAC",
+     "home": "TB",
+     "kickoff": "2026-12-06T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w13-sf-nyg",
+     "away": "SF",
+     "home": "NYG",
+     "kickoff": "2026-12-06T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w13-was-ten",
+     "away": "WAS",
+     "home": "TEN",
+     "kickoff": "2026-12-06T18:00:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w13-mia-den",
+     "away": "MIA",
+     "home": "DEN",
+     "kickoff": "2026-12-06T21:05:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w13-phi-ari",
+     "away": "PHI",
+     "home": "ARI",
+     "kickoff": "2026-12-06T21:05:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w13-buf-ne",
+     "away": "BUF",
+     "home": "NE",
+     "kickoff": "2026-12-06T21:25:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w13-car-min",
+     "away": "CAR",
+     "home": "MIN",
+     "kickoff": "2026-12-06T21:25:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w13-hou-pit",
+     "away": "HOU",
+     "home": "PIT",
+     "kickoff": "2026-12-07T01:20:00.000Z",
+     "status": "scheduled"
+    },
+    {
+     "id": "w13-dal-sea",
+     "away": "DAL",
+     "home": "SEA",
+     "kickoff": "2026-12-08T01:15:00.000Z",
+     "status": "scheduled"
+    }
+   ]
   }
  ],
- "updated": "2026-11-24T04:45:57.798Z",
- "scheduleChecked": "2026-11-24T10:26:39.510Z"
+ "updated": "2026-11-25T10:40:11.977Z",
+ "scheduleChecked": "2026-11-25T10:40:11.977Z"
 }
