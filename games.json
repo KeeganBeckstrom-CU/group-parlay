@@ -874,7 +874,12 @@
      "away": "GB",
      "home": "LAR",
      "kickoff": "2026-11-26T01:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 13,
+      "home": 26
+     },
+     "winner": "home"
     },
     {
      "id": "w12-chi-det",
@@ -1087,6 +1092,6 @@
    ]
   }
  ],
- "updated": "2026-11-25T10:40:11.977Z",
- "scheduleChecked": "2026-11-25T10:40:11.977Z"
+ "updated": "2026-11-26T10:24:35.612Z",
+ "scheduleChecked": "2026-11-26T10:24:35.612Z"
 }
