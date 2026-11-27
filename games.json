@@ -910,7 +910,12 @@
      "away": "KC",
      "home": "BUF",
      "kickoff": "2026-11-27T01:20:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 10,
+      "home": 13
+     },
+     "winner": "home"
     },
     {
      "id": "w12-den-pit",
@@ -1102,6 +1107,6 @@
    ]
   }
  ],
- "updated": "2026-11-27T02:25:52.962Z",
- "scheduleChecked": "2026-11-26T10:24:35.612Z"
+ "updated": "2026-11-27T11:13:53.079Z",
+ "scheduleChecked": "2026-11-27T11:13:53.079Z"
 }
