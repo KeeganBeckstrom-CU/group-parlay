@@ -886,14 +886,24 @@
      "away": "CHI",
      "home": "DET",
      "kickoff": "2026-11-26T18:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 39,
+      "home": 35
+     },
+     "winner": "away"
     },
     {
      "id": "w12-phi-dal",
      "away": "PHI",
      "home": "DAL",
      "kickoff": "2026-11-26T21:30:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 39,
+      "home": 38
+     },
+     "winner": "away"
     },
     {
      "id": "w12-kc-buf",
@@ -1092,6 +1102,6 @@
    ]
   }
  ],
- "updated": "2026-11-26T10:24:35.612Z",
+ "updated": "2026-11-27T02:25:52.962Z",
  "scheduleChecked": "2026-11-26T10:24:35.612Z"
 }
