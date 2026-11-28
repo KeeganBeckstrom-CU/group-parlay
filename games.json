@@ -922,7 +922,12 @@
      "away": "DEN",
      "home": "PIT",
      "kickoff": "2026-11-27T20:00:00.000Z",
-     "status": "scheduled"
+     "status": "final",
+     "score": {
+      "away": 5,
+      "home": 27
+     },
+     "winner": "home"
     },
     {
      "id": "w12-atl-min",
@@ -1107,6 +1112,6 @@
    ]
   }
  ],
- "updated": "2026-11-27T11:13:53.079Z",
+ "updated": "2026-11-28T02:36:12.396Z",
  "scheduleChecked": "2026-11-27T11:13:53.079Z"
 }
